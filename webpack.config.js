@@ -19,7 +19,8 @@ module.exports = {
         sourceMapFilename: '[file].map'
     },
     externals: {
-        'react': 'React'
+        'react': 'React',
+        'react-router': 'ReactRouter'
     },
     devtool: 'source-map',
     plugins: [

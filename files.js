@@ -1,6 +1,7 @@
 module.exports = {
     js: [
-      'src/js/**/*.jsx?'
+      'src/js/**/*.js',
+      'src/js/**/*.jsx'
     ],
     css: [
       'src/css/**/*.css'
@@ -9,9 +10,11 @@ module.exports = {
       'index.html'
     ],
     vendor: [
-      './node_modules/react/dist/react.min.js'
+      './src/index.html',
+      './node_modules/react/dist/react.min.js',
+      './node_modules/react-router/umd/ReactRouter.min.js'
     ],
     destCss: 'style.css',
     release: './assets',
-    entry: './index.html'
+    entry: './assets/index.html'
 };

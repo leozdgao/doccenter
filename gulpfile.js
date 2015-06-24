@@ -59,7 +59,7 @@ gulp.task('copy:vendor', function() {
 gulp.task('dev', ['serve'], function() {
     if (files.entry) {
         var opts = {
-            url: require('url').resolve("http://localhost:" + config.port, files.entry),
+            url: "http://localhost:8080",
             app: getChromeAppName()
         };
 
@@ -71,6 +71,7 @@ gulp.task('dev', ['serve'], function() {
 gulp.task('serve', ['release', 'watch'], function() {
 
     connect.server({
+        root: files.release,
         livereload: true
     });
 });
