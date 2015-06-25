@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "bluebird": "^2.9.30",
+    "body-parser": "^1.13.1",
     "chalk": "^1.0.0",
     "elecpen": "^0.1.5",
     "express": "^4.13.0",
