@@ -1,0 +1,44 @@
+@prefixSideClass: sidebar;
+@contentClass: content-container;
+
+.@{prefixSideClass} {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #333;
+  font-weight: 600;
+  width: @sidebarWidth; // consider media query
+
+  .@{prefixSideClass}-btn {
+    display: block;
+    height: @sidebarLineHeight;
+    line-height: @sidebarLineHeight;
+    padding-left: 10px;
+    color: @sidebarTextColor;
+    text-shadow: 0 0 1px #333;
+
+    &:hover {
+      background-color: @sidebarHoverColor;
+      color: @sidebarActiveColor;
+    }
+
+    &.active {
+      background-color: @sidebarActiveBkg;
+      color: @sidebarActiveColor;
+    }
+
+    span { padding-left: 10px; }
+  }
+
+  .@{prefixSideClass}-spliter {
+    display: block;
+    border-bottom: 2px solid #555;
+    margin: 10px 0;
+  }
+}
+
+.@{contentClass} {
+  margin-left: @sidebarWidth;
+  padding: 0 25px;
+}

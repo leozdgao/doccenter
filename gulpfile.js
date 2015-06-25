@@ -9,6 +9,7 @@ var config = require('./config');
 // load dependencies
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
+var less = require('gulp-less');
 var minify = require('gulp-minify-css'); //css
 var autoprefixer = require('gulp-autoprefixer');
 var sourcemaps = require('gulp-sourcemaps');
@@ -23,9 +24,9 @@ gulp.task('release', ['release:css', 'release:js', 'copy:vendor']);
 gulp.task('release:css', function() {
 
     //css
-    return gulp.src(files.css)
+    return gulp.src(files.mainStyle)
         .pipe(sourcemaps.init())
-        .pipe(concat(files.destCss))
+        .pipe(less())
         .pipe(autoprefixer({
             browsers: ['> 5%', 'last 5 version']
         })) // auto-prefix

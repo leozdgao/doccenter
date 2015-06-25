@@ -20,7 +20,9 @@ module.exports = {
     },
     externals: {
         'react': 'React',
-        'react-router': 'ReactRouter'
+        'react-router': 'ReactRouter',
+        'marked': 'marked',
+        'highlight': 'hljs'
     },
     devtool: 'source-map',
     plugins: [
@@ -34,5 +36,8 @@ module.exports = {
                 loader: 'babel'
             }
         ]
+    },
+    resolve: {
+        extensions: ['', '.js', '.jsx']
     }
 }
