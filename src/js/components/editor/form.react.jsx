@@ -24,7 +24,7 @@ export default React.createClass({
   render () {
     return (
       <form>
-        <h2><i className="fa fa-file-text-o"></i> Write Document</h2>
+        <h2 className="icon-text"><i className="fa fa-file-text-o"></i> Write Document</h2>
         <TitleInput title={this.state.title} refreshState={this._refreshState('title')} validate={this.state.validation.title} />
         <TagInput tags={this.state.tags} refreshState={this._refreshState('tags')} />
         <Editor content={this.state.content} refreshState={this._refreshState('content')} validate={this.state.validation.content} />
