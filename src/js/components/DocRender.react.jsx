@@ -1,5 +1,7 @@
 import React from 'react';
 import { isEmptyString, ajax } from '../util';
+import Render from './content/render.react';
+import AutoIndex from './content/autoIndex.react';
 
 export default React.createClass({
   getInitialState () {
@@ -21,9 +23,8 @@ export default React.createClass({
     if(!this.state.badload) {
       return (
         <div>
-          <h2>{this.state.article.title}</h2>
-          <div className="markdown" dangerouslySetInnerHTML={{__html: this.state.article.content}}></div>
-          <div className="spinner"></div>
+          <Render title={this.state.article.title} tags={this.state.article.tags} content={this.state.article.content} />
+          <AutoIndex content={this.state.article.content} />
         </div>
       );
     }

@@ -5,6 +5,7 @@ var articleSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, auto: true },
     title: { type: String, required: true },
     date: { type: Date, default: new Date() },
+    lastUpdateDate: { type: Date, default: new Date() },
     tags: { type: [String] },
     content: { type: String, required: true }
 }, { collection: 'articles', versionKey: false });
@@ -25,6 +26,9 @@ exports.post = function(obj) {
   return newArticle.saveAsync();
 };
 
-exports.update = Article.findByIdAndUpdateAsync.bind(Article);
+exports.update = function(id, update, opts) {
+  if(typeof update.lastUpdateDate === 'undefined') update.lastUpdateDate = new Date();
+  return Article.findByIdAndUpdateAsync(id, update, opts);
+}
 
 exports.remove = Article.findByIdAndRemoveAsync.bind(Article);
