@@ -2,17 +2,38 @@
   margin-right: @tagPanelWidth;
 }
 
-.slip {
+.searchbox {
+  position: relative;
   margin-bottom: 15px;
 
-  .slip-title {
-    margin-bottom: 10px;
+  input {
+    border-radius: 10px;
+    padding-left: 35px;
   }
+
+  i {
+    position: absolute;
+    left: 12px;
+    top: 8px;
+  }
+}
+
+.slip {
+  padding-bottom: 10px;
+  border-bottom: 1px solid @border_color;
+
   .help-text {
     margin-right: 15px;
   }
-  .text-hl {
-    margin-right: 5px;
+}
+.slip-title {
+  margin: 8px 0;
+  a {
+    color: #4f4f4f;
+
+    &:hover {
+      color: @color;
+    }
   }
 }
 
@@ -22,6 +43,10 @@
 
   h4 {
     margin-bottom: 15px;
+  }
+
+  .tag {
+    margin-bottom: 5px;
   }
 }
 

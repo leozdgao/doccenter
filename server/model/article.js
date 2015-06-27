@@ -4,8 +4,8 @@ var Schema = mongoose.Schema;
 var articleSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, auto: true },
     title: { type: String, required: true },
-    date: { type: Date, default: new Date() },
-    lastUpdateDate: { type: Date, default: new Date() },
+    date: { type: Date, default: Date.now },
+    lastUpdateDate: { type: Date, default: Date.now },
     tags: { type: [String] },
     priority: { type: Number, default: 0 },
     content: { type: String, required: true },

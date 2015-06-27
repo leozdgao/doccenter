@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import Pagination from './pagination.react';
+import SearchBox from './searchbox.react';
 import {dateFormat} from '../../util';
 
 export default React.createClass({
@@ -29,6 +30,7 @@ export default React.createClass({
 
     return (
       <div className="doclist">
+        <SearchBox />
         {slips}
         <Pagination page={this.props.page} sum={this.props.pageSum} pageChange={this.props.pageChange} />
       </div>

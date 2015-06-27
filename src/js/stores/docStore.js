@@ -7,7 +7,7 @@ export default Reflux.createStore({
     this.listenToMany(docActions);
   },
   onPage (page) {
-    let count, limit = 15;
+    let count, limit = 12;
     ajax.get('/service/article/count')
       .then((res) => {
         count = res.count || 0;
@@ -26,7 +26,7 @@ export default Reflux.createStore({
       .then((res) => {
         this.trigger({list: res, count: count});
       })
-      .catch((e) => { console.log(e);
+      .catch((e) => {
         this.trigger();
       })
   },
@@ -35,7 +35,7 @@ export default Reflux.createStore({
       .then((res) => {
         this.trigger({tags: res.tags});
       })
-      .catch((e) => { console.log(e);
+      .catch((e) => {
         this.trigger();
       })
   },

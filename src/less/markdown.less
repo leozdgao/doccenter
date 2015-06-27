@@ -3,7 +3,16 @@
     padding-bottom: 8px;
     border-bottom: 1px dotted #ccc;
   }
-  
+
+  a {
+    color: @color;
+    text-decoration: none;
+
+    &:hover {
+      color: @light_color;
+    }
+  }
+
   pre {
     background-color: #eee;
     color: #555;
