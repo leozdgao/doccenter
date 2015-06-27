@@ -40,28 +40,24 @@ export default React.createClass({
       if(!this._checkValidate(key, this.state[key])) return;
     }
     // post
-    let that = this; console.log(this.state);
-    ajax({
-      method: 'POST',
-      url: this.props.postUrl,
-      body: this.state,
-      onload () {
-        let res = JSON.parse(this.response),
-            id = res[0]._id;
+    ajax.post(this.props.postUrl, this.state)
+      .then((res) => {
+        let id = res[0]._id;
         // redirect
-        if(typeof that.props.afterPost == 'function') that.props.afterPost(id);
-      },
-      onerror (isTimeout) {
-        if(isTimeout) that._setErrMsg('Request timeout.');
+        if(typeof this.props.afterPost == 'function') this.props.afterPost(id);
+      })
+      .catch((xhr) => {
+        if(xhr.hasTimeout) {
+          this._setErrMsg('Request timeout.');
+        }
         else {
-          let res = this.response, msg;
+          let res = xhr.response, msg;
           if(isString(res)) msg = res;
           else msg = res.msg;
 
-          that._setErrMsg(msg);
+          this._setErrMsg(msg);
         }
-      }
-    })
+      });
   },
   _refreshState (key) {
     return (val) => {

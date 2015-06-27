@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default React.createClass({
-  getDefaultProps: function() {
+  getDefaultProps () {
     return {
       title: '',
       content: '',

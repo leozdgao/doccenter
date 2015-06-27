@@ -1,5 +1,7 @@
 import React from 'react';
+import {Link} from 'react-router';
 import Pagination from './pagination.react';
+import {dateFormat} from '../../util';
 
 export default React.createClass({
   getDefaultProps: function() {
@@ -8,15 +10,17 @@ export default React.createClass({
     };
   },
   render () {
-    var rows =
-      this.props.docs.map((d) => {
+    var slips =
+      this.props.docs.map((d, i) => {
         return (
-          <tr>
-            <td>{d.title}</td>
-            <td>{d.author}</td>
-            <td>{d.date}</td>
-            <td>{d.lastUpdateDate}</td>
-          </tr>
+          <div key={i} className="slip">
+            <h2 className="slip-title"><Link to="doc" params={{id: d._id}}>{d.title}</Link></h2>
+            <div>
+              <span className="help-text">CreateBy: {d.author || '?'}</span>
+              <span className="help-text">Date: {dateFormat(d.date)}</span>
+              <span className="help-text">Updated: {dateFormat(d.lastUpdateDate)}</span>
+            </div>
+          </div>
         );
       });
     var tip;
@@ -25,19 +29,7 @@ export default React.createClass({
 
     return (
       <div className="doclist">
-        <table>
-          {/*table head*/}
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Author</th>
-              <th>CreateDate</th>
-              <th>LastUpdateDate</th>
-            </tr>
-          </thead>
-          {rows}
-        </table>
-        {tip}
+        {slips}
         <Pagination page={this.props.page} sum={this.props.pageSum} pageChange={this.props.pageChange} />
       </div>
     );

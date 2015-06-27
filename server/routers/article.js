@@ -7,6 +7,27 @@ router.param('article_id', function(req, res, next, id) {
   next();
 });
 
+router.get('/count', function(req, res, next) {
+  Article.count()
+    .then(function(c) {
+      res.json({count: c});
+    })
+    .catch(function(err) {
+      next(err);
+    })
+});
+
+router.get('/tags', function(req, res, next) {
+  Article.tags()
+    .then(function(ret) {
+      var tags = ret[0][0].value;
+      res.json(tags);
+    })
+    .catch(function(err) {
+      next(err);
+    });
+});
+
 router.get('/', function(req, res, next) {
   var query = resolver.resolveObject(req.query);
   Article.query(query.conditions, query.fields, query.options)

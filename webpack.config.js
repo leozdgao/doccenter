@@ -22,7 +22,8 @@ module.exports = {
         'react': 'React',
         'react-router': 'ReactRouter',
         'marked': 'marked',
-        'highlight': 'hljs'
+        'highlight': 'hljs',
+        'reflux': 'Reflux'
     },
     devtool: 'source-map',
     plugins: [

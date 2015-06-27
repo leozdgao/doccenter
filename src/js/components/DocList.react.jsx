@@ -1,24 +1,34 @@
 import React from 'react';
+import docActions from '../actions/docActions';
+import docStore from '../stores/docStore';
 import List from './list/doclist.react';
 import TagPanel from './list/tagpanel.react';
-import {ajax} from '../util';
+import {isInteger, isDefined, ensure} from '../util';
 
 export default React.createClass({
+  statics: {
+    willTransitionTo (transition, params, query) {
+      let page = query.p;
+      if(isDefined(page) && !isInteger(Number(page))) { // check page
+        transition.redirect('docs');
+      }
+    },
+  },
   getInitialState: function() {
     return {
       list: [], // the list of article which the list should render
       tags: [], // entire tags
       pageSum: 1,
-      page: 1 // query?
+      page: this.props.query.p || 1 // default 1
     };
   },
   componentDidMount: function() {
-    // get count of the docs
-
-    // request for list according the pagination
-
-    // request for tags
-
+    docActions.page(this.state.page); // trigger action
+    docActions.tags();
+    docStore.listen((ret) => {
+      let {count, tags, list} = ret;
+      this.setState(ensure({pageSum: count, tags: tags, list: list}));
+    });
   },
   // request list and do pagination here
   render () {
@@ -30,9 +40,6 @@ export default React.createClass({
     );
   },
   _pageChange (page) {
-    // request again for new page
-
-    // set page
-    this.setState({page: page});
+    docActions.page(page); // tigger action
   }
 });

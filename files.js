@@ -14,7 +14,8 @@ module.exports = {
       './src/index.html',
       './node_modules/react/dist/react.min.js',
       './node_modules/react-router/umd/ReactRouter.min.js',
-      './node_modules/marked/marked.min.js'
+      './node_modules/marked/marked.min.js',
+      './node_modules/reflux/dist/reflux.min.js'
     ],
     mainStyle: 'src/less/site.less',
     destCss: 'style.css',
