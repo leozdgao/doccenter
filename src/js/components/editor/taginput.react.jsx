@@ -15,7 +15,7 @@ export default React.createClass({
     return (
       <div className="textbox tag-input" onClick={this._click}>
         {tags}
-        <input type="text" ref="input" onKeyDown={this._keyDown} onKeyUp={this._keyUp} placeholder="Tag, like: JavaScript" />
+        <input type="text" ref="input" onKeyDown={this._keyDown} onKeyUp={this._keyUp} onBlur={this._blur} placeholder="Tag, like: JavaScript" />
         <span className="hidden" ref="hidden"></span>
       </div>
       );
@@ -23,6 +23,13 @@ export default React.createClass({
   _click () {
     let input = React.findDOMNode(this.refs.input);
     input.focus();
+  },
+  _blur () {
+    let input = React.findDOMNode(this.refs.input);
+    let val = input.value.trim();
+    input.value = "";
+    input.style.width = this._initialInputWidth + "px";
+    this._addTag(val);
   },
   _keyDown (e) {
     let input = React.findDOMNode(this.refs.input);
