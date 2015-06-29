@@ -14,6 +14,10 @@ export function isDefined(val) {
   return val != null;
 }
 
+export function isArray(val) {
+  return Object.prototype.toString.call(val) == '[object Array]'
+}
+
 export function dateFormat(date) {
   if(isNaN(Date.parse(date))) return '';
 
@@ -121,4 +125,19 @@ export function querystring(obj) {
     params.push(key + '=' + resolved[key]);
   }
   return params.join('&');
+}
+
+export function copy(a, b) {
+  b = b || (isArray(a) ? [] : {});
+
+  for(let key in a) if(a.hasOwnProperty(key)) {
+
+    if(typeof a[key] == 'object') {
+      if(isArray(a[key])) b[key] = copy(a[key], []);
+      else b[key] = copy(a[key], {});
+    }
+    else b[key] = a[key];
+  }
+
+  return b;
 }

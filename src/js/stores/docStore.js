@@ -1,17 +1,21 @@
 import Reflux from 'reflux';
 import docActions from '../actions/docActions';
-import {ajax, querystring} from '../util';
+import {ajax, querystring, ensure} from '../util';
 
 export default Reflux.createStore({
   init () {
     this.listenToMany(docActions);
   },
-  onPage (page) {
-    let count, limit = 12;
-    ajax.get('/service/article/count')
+  onPage (page, conditions) {
+    let count, limit = 10;
+    let cqs = querystring(ensure({
+      conditions: conditions
+    }));
+    ajax.get('/service/article/count?'+cqs)
       .then((res) => {
         count = res.count || 0;
-        let qs = querystring({
+        let qs = querystring(ensure({
+          conditions: conditions,
           options: {
             skip: (page - 1) * limit,
             limit: limit,
@@ -20,15 +24,15 @@ export default Reflux.createStore({
               date: -1
             }
           }
-        });
+        }));
         return ajax.get('/service/article?'+qs);
       })
       .then((res) => {
         this.trigger({list: res, count: count});
       })
-      .catch((e) => {
-        this.trigger();
-      })
+      .catch((e) => {console.log(e);
+        this.trigger({fail: 'page'});
+      });
   },
   onTags () {
     ajax.get('/service/article/tags')
@@ -36,8 +40,8 @@ export default Reflux.createStore({
         this.trigger({tags: res.tags});
       })
       .catch((e) => {
-        this.trigger();
-      })
+        this.trigger({fail: 'tag'});
+      });
   },
   onDocLoad (id) {
     ajax.get('/service/article/' + id)

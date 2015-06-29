@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 
 export default React.createClass({
   getDefaultProps: function() {
@@ -10,7 +11,7 @@ export default React.createClass({
     let tags = this.props.tags, items;
     if(tags.length > 0) {
       items = tags.map((item, i) => {
-        return (<span className="tag">{item}</span>);
+        return (<Link className="tag" to="docs" query={{t: item}}>{item}</Link>);
       });
     }
     else items = (

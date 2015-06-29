@@ -8,7 +8,8 @@ router.param('article_id', function(req, res, next, id) {
 });
 
 router.get('/count', function(req, res, next) {
-  Article.count()
+  var query = resolver.resolveObject(req.query);
+  Article.count(query.conditions)
     .then(function(c) {
       res.json({count: c});
     })

@@ -14,32 +14,64 @@ export default React.createClass({
       }
     },
   },
-  getInitialState: function() {
+  getInitialState () {
     return {
       list: [], // the list of article which the list should render
       tags: [], // entire tags
       pageSum: 1,
-      page: this.props.query.p || 1 // default 1
+      page: this._getPage(this.props.query), // default 1
+      pageLoading: true,
+      conditions: this._getConditions(this.props.query)
     };
   },
-  componentDidMount: function() {
-    docActions.page(this.state.page); // trigger action
+  componentWillReceiveProps (props) {
+    docActions.page(this._getPage(props.query), this._getConditions(props.query)); // tigger action
+    this.setState({pageLoading: true});
+  },
+  componentDidMount () {
+    docActions.page(this.state.page, this.state.conditions); // trigger action
     docActions.tags();
     docStore.listen((ret) => {
-      let {count, tags, list} = ret;
-      this.setState(ensure({pageSum: count, tags: tags, list: list}));
+      if(!ret.fail) {
+        let {count, tags, list} = ret;
+        this.setState(ensure({
+          pageSum: count,
+          tags: tags,
+          list: list,
+          page: this._getPage(this.props.query),
+          pageLoading: false,
+          pageFail: false
+          })
+        );
+      }
+      // fail to load data
+      else {
+        if(ret.fail == 'page') this.setState({ pageFail: true, pageLoading: false });
+        else if(ret.fail == 'tag') this.setState({ tagFail: true, pageLoading: false })
+      }
     });
   },
   // request list and do pagination here
   render () {
     return (
-      <div>
-        <TagPanel tags={this.state.tags} />
-        <List docs={this.state.list} page={this.state.page} sum={this.state.pageSum} pageChange={this._pageChange} />
+      <div className="vessel">
+        <TagPanel tags={this.state.tags} loadFail={this.state.tagFail} />
+        <List docs={this.state.list} page={this.state.page} sum={this.state.pageSum} loadFail={this.state.pageFail} loading={this.state.pageLoading} />
       </div>
     );
   },
-  _pageChange (page) {
-    docActions.page(page); // tigger action
+  _getPage (query) {
+    return (query && query.p) || 1;
+  },
+  _getConditions (query) {
+    let q = {};
+    // tag
+    if(query.t) q["tags"] = query.t;
+    if(query.s) {
+      q["$text"] = q["$text"] || {}; // $text: { $search: key }
+      q["$text"]["$search"] =  query.s;
+    }
+
+    return q;
   }
 });

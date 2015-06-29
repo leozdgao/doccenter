@@ -51,9 +51,19 @@ export default React.createClass({
           this._setErrMsg('Request timeout.');
         }
         else {
-          let res = xhr.response, msg;
-          if(isString(res)) msg = res;
-          else msg = res.msg;
+          let res, msg;
+          if(xhr.status == 0) {
+            msg = 'Can\'t connect to server.';
+          }
+          else {
+            try {
+              res = JSON.parse(xhr.response);
+              msg = res.msg || 'Unexpected error.';
+            }
+            catch(e) {
+              msg = 'Unknown response.';
+            }
+          }
 
           this._setErrMsg(msg);
         }
