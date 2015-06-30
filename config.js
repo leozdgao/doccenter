@@ -5,7 +5,8 @@ var productdb = process.env['MONGO_PRODUCT'] || "mongodb://10.10.73.207:27018/Ps
 module.exports = {
   port: process.env.PORT || 8000,
   db: {
-    connection: debug ? testdb : productdb
+    connection: debug ? testdb : productdb,
+    timeout: 10000
   },
   log: {
     infoFile: 'info.log',

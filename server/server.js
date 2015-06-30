@@ -29,7 +29,7 @@ var connected = false;
 // set db connectiion config, timeout 5s
 var dbConfig = {
     server: {
-        socketOptions: { connectTimeoutMS: 5000 }
+        socketOptions: { connectTimeoutMS: config.db.timeout || 5000 }
     }
 };
 
