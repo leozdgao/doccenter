@@ -122,7 +122,7 @@ export function querystring(obj) {
 
   let params = [];
   for(let key in resolved) if(resolved.hasOwnProperty(key)) {
-    params.push(key + '=' + resolved[key]);
+    params.push(key + '=' + encodeURIComponent(resolved[key]));
   }
   return params.join('&');
 }
