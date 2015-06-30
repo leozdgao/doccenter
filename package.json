@@ -6,7 +6,9 @@
     "github": "https://github.com/leozdgao/em-doccenter.git"
   },
   "scripts": {
-    "start": "gulp && node server/server"
+    "start": "gulp && node server/server",
+    "deploy": "gulp && pm2 start server/server.js --name doccenter",
+    "redeploy": "gulp && pm2 restart doccenter"
   },
   "author": "leozdgao",
   "license": "MIT",
