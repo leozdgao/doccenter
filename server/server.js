@@ -48,7 +48,7 @@ mongoose.connection.on("disconnected", function() {
         logger.warning("DBConnection closed. Try to reconnect.");
 
         setTimeout(function() {
-            mongoose.connection.open(config.dbConnection, dbConfig);
+            mongoose.connection.open(config.db.connection, dbConfig);
         }, 5000);
     }
 });
