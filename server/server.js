@@ -26,14 +26,16 @@ var config = require('../config');
 var port = process.env.PORT || config.port || 4000;
 var connected = false;
 
-// set db connectiion config, timeout 5s
+// set db connectiion config, timeout
+var timeout = config.db.timeout || 5000;
 var dbConfig = {
     server: {
-        socketOptions: { connectTimeoutMS: config.db.timeout || 5000 }
+        socketOptions: { connectTimeoutMS: timeout }
     }
 };
 
 mongoose.connect(config.db.connection, dbConfig);
+logger.info("Try to connect to DB, timeout set to " + timeout + "ms");
 
 mongoose.connection.on("connected", function() {
     logger.info("Connected to DB...");
@@ -49,7 +51,7 @@ mongoose.connection.on("disconnected", function() {
 
         setTimeout(function() {
             mongoose.connection.open(config.db.connection, dbConfig);
-        }, 5000);
+        }, timeout);
     }
 });
 
