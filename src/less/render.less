@@ -1,0 +1,32 @@
+.render {
+  margin-right: @autoindex_width;
+
+  .header {
+    padding-bottom: 12px;
+    border-bottom: 1px solid @border_color;
+
+    h1 { margin-top: 0; }
+    .tags { margin-bottom: 12px; }
+  }
+
+  .help-text {
+    margin-right: 15px;
+  }
+}
+
+.auto-index {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: @autoindex_width;
+
+  ul {
+    padding-left: 18px;
+    margin: 0;
+    list-style-type: square;
+  }
+  li a {
+    display: block;
+    padding: 5px 0;
+  }
+}

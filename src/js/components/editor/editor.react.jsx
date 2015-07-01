@@ -1,6 +1,12 @@
 import React from 'react';
 import marked from 'marked';
 
+let renderer = new marked.Renderer(), seed = 0;
+renderer.heading = function (text, level) {
+  let id = 'header' + (seed ++); console.log(id);
+  return '<h' + level + ' id="'+ id +'">' + text + '</h' + level + '>';
+};
+
 export default React.createClass({
   getDefaultProps () {
     return {
@@ -26,6 +32,7 @@ export default React.createClass({
     this.resizer = React.findDOMNode(this.refs.resizer);
   },
   render () {
+    seed = 0; // set seed to 0 everytime render an article
     return (
       <div className={this.state.panelClass}>
         <div className="md-menubar">
@@ -65,7 +72,7 @@ export default React.createClass({
         <div className={this.state.modeControlStyle["pEditor"]}>
           <textarea ref="editor" name="content" onChange={this._onChange}></textarea>{/*style={{height: this.state.editorHeight + 'px'}}*/}
         </div>
-        <div className={this.state.modeControlStyle["pPreview"]} ref="preview" dangerouslySetInnerHTML={{__html: this.props.content}}></div>
+        <div className={this.state.modeControlStyle["pPreview"]} ref="preview" dangerouslySetInnerHTML={{__html: marked(this.props.content, { renderer: renderer })}}></div>
         <div className="md-spliter"></div>
         {/*<div className="md-resizer" ref="resizer" onMouseDown={this._mousedown} onDragStart={this._dragstart}></div>*/}
       </div>
@@ -75,7 +82,7 @@ export default React.createClass({
     if(this._ltr) clearTimeout(this._ltr);
 
     this._ltr = setTimeout(() => {
-      this.props.refreshState(marked(this.textControl.value)); // change state
+      this.props.refreshState(this.textControl.value); // change state
     }, 300);
   },
   _preInputText (text, preStart, preEnd) {
@@ -91,7 +98,7 @@ export default React.createClass({
     this.textControl.value = origin.slice(0, start) + text + origin.slice(end);
     // pre-select
     this.textControl.setSelectionRange(start + preStart, start + preEnd);
-    this.props.refreshState(marked(this.textControl.value)); // change state
+    this.props.refreshState(this.textControl.value); // change state
   },
   _boldText () {
     this._preInputText("**Bold**", 2, 6);

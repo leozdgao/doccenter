@@ -1,9 +1,16 @@
 import React from 'react';
+import marked from 'marked';
 import {isEmptyString} from '../util';
 import docActions from '../actions/docActions';
 import docStore from '../stores/docStore';
 import Render from './content/render.react';
 import AutoIndex from './content/autoIndex.react';
+
+let renderer = new marked.Renderer(), seed = 0;
+renderer.heading = function (text, level) {
+  let id = 'header' + (seed ++); console.log(id);
+  return '<h' + level + ' id="'+ id +'">' + text + '</h' + level + '>';
+};
 
 export default React.createClass({
   getInitialState () {
@@ -30,11 +37,15 @@ export default React.createClass({
     });
   },
   render () {
+    seed = 0;
     if(!this.state.badload) {
+      let content = marked(this.state.article.content, { renderer: renderer });
       return (
         <div>
-          <Render title={this.state.article.title} tags={this.state.article.tags} content={this.state.article.content} />
-          <AutoIndex content={this.state.article.content} />
+          <div ref="indexer" className="auto-index">
+            <h3>Article Index</h3>
+          </div>
+          <Render article={this.state.article} content={content} onIndexed={this._handleIndex} />
         </div>
       );
     }
@@ -42,7 +53,10 @@ export default React.createClass({
     else {
       return (
         <div></div>
-      )
+      );
     }
+  },
+  _handleIndex (ul) {
+    React.findDOMNode(this.refs.indexer).appendChild(ul);
   }
 });
