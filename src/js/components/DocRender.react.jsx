@@ -16,6 +16,7 @@ export default React.createClass({
     return {
       loading: true,
       article: {
+        _id: '',
         title: '',
         tags: [],
         content: ''

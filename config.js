@@ -1,5 +1,5 @@
 var debug = (process.env['PRODUCT'] != 'true');
-var testdb = process.env['MONGO_DOC_TEST'] || "mongodb://10.10.73.207:27018/test";
+var testdb = process.env['MONGO_DOC_TEST'] || process.env['MONGO_TEST'] || "mongodb://10.10.73.207:27018/test";
 var productdb = process.env['MONGO_DOC_PRODUCT'] || "mongodb://10.10.73.207:27018/Ps_Service";
 
 module.exports = {
