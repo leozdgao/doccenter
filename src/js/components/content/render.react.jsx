@@ -1,5 +1,6 @@
 import React from 'react';
-import {dateFormat, autoIndex} from '../../util';
+import {Link} from 'react-router';
+import {dateFormat, AutoIndexer} from '../../util';
 
 export default React.createClass({
   getDefaultProps () {
@@ -11,7 +12,9 @@ export default React.createClass({
   componentDidMount () {
     setTimeout(() => {
       let article = React.findDOMNode(this.refs.article);
-      let index = autoIndex(article);
+      article.innerHTML = this.props.content;
+      let indexer = AutoIndexer.createIndexer();
+      let index = indexer(article);
       this.props.onIndexed(index);
     }, 1000);
   },
@@ -34,9 +37,11 @@ export default React.createClass({
             <span className="help-text">CreatedBy: {article.author || '?'}</span>
             <span className="help-text">CreatedDate: {dateFormat(article.date)}</span>
             <span className="help-text">LastUpdateDate: {dateFormat(article.lastUpdateDate)}</span>
+            <Link to="edit" params={{id: article._id}}><i className="help-text fa fa-pencil"></i></Link>
+            <span className="help-text fa fa-trash-o"></span>
           </div>
         </div>
-        <div ref="article" className="markdown" dangerouslySetInnerHTML={{__html: this.props.content}}></div>
+        <div ref="article" className="markdown"></div>
         {/*<CommentBox />*/}
       </div>
     );

@@ -4,7 +4,6 @@ import {isEmptyString} from '../util';
 import docActions from '../actions/docActions';
 import docStore from '../stores/docStore';
 import Render from './content/render.react';
-import AutoIndex from './content/autoIndex.react';
 
 let renderer = new marked.Renderer(), seed = 0;
 renderer.heading = function (text, level) {
@@ -37,7 +36,6 @@ export default React.createClass({
     });
   },
   render () {
-    seed = 0;
     if(!this.state.badload) {
       let content = marked(this.state.article.content, { renderer: renderer });
       return (

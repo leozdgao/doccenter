@@ -3,7 +3,7 @@ import marked from 'marked';
 
 let renderer = new marked.Renderer(), seed = 0;
 renderer.heading = function (text, level) {
-  let id = 'header' + (seed ++); console.log(id);
+  let id = 'header' + (seed ++);
   return '<h' + level + ' id="'+ id +'">' + text + '</h' + level + '>';
 };
 

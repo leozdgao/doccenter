@@ -5,6 +5,7 @@ import Overview from './components/Overview.react';
 import Docs from './components/Docs.react';
 import DocList from './components/DocList.react';
 import NewDoc from './components/NewDoc.react';
+import EditDoc from './components/EditDoc.react';
 import DocRender from './components/DocRender.react';
 import NotFound from './components/NotFound.react';
 
@@ -33,6 +34,7 @@ let routes = (
     {/*<Route name="slides" path="slides" handler={} />*/}
     {/*<Route name="archives" path="archives" handler={} />*/}
     <Route name="newdoc" path="newdoc" handler={NewDoc} />
+    <Route name="edit" path="/edit/:id" handler={EditDoc} />
     <NotFoundRoute handler={NotFound} />
   </Route>
 );

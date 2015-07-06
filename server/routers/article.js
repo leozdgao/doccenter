@@ -15,7 +15,7 @@ router.get('/count', function(req, res, next) {
     })
     .catch(function(err) {
       next(err);
-    })
+    });
 });
 
 router.get('/tags', function(req, res, next) {
