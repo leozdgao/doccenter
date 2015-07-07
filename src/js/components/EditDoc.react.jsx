@@ -32,7 +32,7 @@ export default React.createClass({
     docActions.getOneDoc(id);
     docStore.listen((res) => {
       if(res.submitted) {
-        this.transitionTo('doc', {id: this.state.article._id});
+        this.transitionTo('doc', {id: res.article._id});
       }
       else {
         this.setState(res);
