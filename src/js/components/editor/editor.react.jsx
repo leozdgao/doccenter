@@ -79,11 +79,11 @@ export default React.createClass({
     );
   },
   _onChange (e) {
-    if(this._ltr) clearTimeout(this._ltr);
+    // if(this._ltr) clearTimeout(this._ltr);
 
-    this._ltr = setTimeout(() => {
+    // this._ltr = setTimeout(() => {
       this.props.refreshState(this.textControl.value); // change state
-    }, 300);
+    // }, 300);
   },
   _preInputText (text, preStart, preEnd) {
     let start = this.textControl.selectionStart,
