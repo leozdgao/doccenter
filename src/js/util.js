@@ -231,7 +231,7 @@ AutoIndexer.createIndexer = function(opts) {
     // create anchor node by data
     function createAnchor(data) {
       var a = document.createElement('a');
-      a.href = '#' + data.anchor;
+      a.href = location.pathname + '#' + data.anchor;
       a.target = '_self';
       a.textContent = data.title;
       return a;
