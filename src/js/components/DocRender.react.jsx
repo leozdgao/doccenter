@@ -7,7 +7,7 @@ import Render from './content/render.react';
 
 let renderer = new marked.Renderer(), seed = 0;
 renderer.heading = function (text, level) {
-  let id = 'header' + (seed ++); console.log(id);
+  let id = 'header' + (seed ++);
   return '<h' + level + ' id="'+ id +'">' + text + '</h' + level + '>';
 };
 
@@ -25,6 +25,7 @@ export default React.createClass({
     }
   },
   componentDidMount () {
+    seed = 0; // reset seed
     let id = this.props.params.id;
     docActions.docLoad(id); // action trigger
     docStore.listen((res) => {

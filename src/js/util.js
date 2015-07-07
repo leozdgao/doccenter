@@ -78,14 +78,14 @@ export function ajax({
 
       xhr.send(JSON.stringify(body));
     });
-}
+};
 
 ajax.get = (url, headers, timeout) => {
   return ajax({
     url: url,
     headers: headers,
     timeout: timeout
-  })
+  });
 };
 
 ajax.post = (url, body, headers, timeout) => {
@@ -95,7 +95,26 @@ ajax.post = (url, body, headers, timeout) => {
     body: body,
     headers: headers,
     timeout: timeout
-  })
+  });
+};
+
+ajax.put = (url, body, headers, timeout) => {
+  return ajax({
+    method: 'PUT',
+    url: url,
+    body: body,
+    headers: headers,
+    timeout: timeout
+  });
+};
+
+ajax.delete = (url, headers, timeout) => {
+  return ajax({
+    method: 'DELETE',
+    url: url,
+    headers: headers,
+    timeout: timeout
+  });
 };
 
 export function querystring(obj) {

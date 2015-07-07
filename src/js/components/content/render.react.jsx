@@ -1,8 +1,12 @@
 import React from 'react';
-import {Link} from 'react-router';
-import {dateFormat, AutoIndexer} from '../../util';
+import {Link, Navigation} from 'react-router';
+import Modal, {showModal} from '../modal/modal.react';
+import {ajax, dateFormat, AutoIndexer} from '../../util';
+
+let container;
 
 export default React.createClass({
+  mixins: [Navigation],
   getDefaultProps () {
     return {
       article: {},
@@ -37,14 +41,38 @@ export default React.createClass({
             <span className="help-text">CreatedBy: {article.author || '?'}</span>
             <span className="help-text">CreatedDate: {dateFormat(article.date)}</span>
             <span className="help-text">LastUpdateDate: {dateFormat(article.lastUpdateDate)}</span>
-            <Link to="edit" params={{id: article._id}}><i className="help-text fa fa-pencil"></i></Link>
-            <span className="help-text fa fa-trash-o"></span>
+            <Link to="edit" params={{id: article._id}} title="Edit"><i className="help-text fa fa-pencil"></i></Link>
+            <a className="help-text" onClick={this._onRemove} title="Remove"><i className="fa fa-trash-o"></i></a>
           </div>
         </div>
         <div ref="article" className="markdown"></div>
         {/*<CommentBox />*/}
       </div>
     );
+  },
+  _onRemove () {
+    // prepare container for modal
+    if(!container) {
+      container = document.createElement('div');
+      document.body.appendChild(container);
+    }
+
+    let content = (
+      <div>Remove this article ?</div>
+    ), self = this;
+
+    this.d = showModal(content, {
+      type: 'confirm',
+      width: 400,
+      onConfirm: () => {
+        return ajax.delete('/service/article/' + this.props.article._id);
+      },
+      onClose: (redirect) => {
+        if(redirect) {
+          self.transitionTo('docs');
+        }
+      }
+    }, container);
   }
   // consider some iframe service like jsfiddle
 });

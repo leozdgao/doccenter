@@ -11,21 +11,23 @@ router.param('att_key', function(req, res, next, key) {
 });
 
 router.get('/:att_key', function(req, res, next) {
-  proxy('path')
+  var key = req['att_key'];
+  proxy(url.resolve(proxyUrl, key))
     .then(function(pres) {
       // done
     });
 });
 
 router.post('/', function() {
-  proxy('path')
+  proxy(proxyUrl)
     .then(function(pres) {
       // add attachments entry
     });
 });
 
 router.delete('/:att_key', function() {
-  proxy('path')
+  var key = req['att_key'];
+  proxy(url.resolve(proxyUrl, key))
     .then(function(pres) {
       // remove attachments entry
     });

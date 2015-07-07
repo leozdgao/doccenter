@@ -30,7 +30,7 @@ export default Reflux.createStore({
       .then((res) => {
         this.trigger({list: res, count: count});
       })
-      .catch((e) => {console.log(e);
+      .catch((e) => {
         this.trigger({fail: 'page'});
       });
   },
@@ -51,5 +51,51 @@ export default Reflux.createStore({
       .catch(() => {
         this.trigger();
       });
+  },
+  onGetOneDoc (id) {
+    ajax.get('/service/article/' + id)
+      .then((res) => {
+        this.trigger({article: res, loaded: true, message: ''});
+      })
+      .catch(() => {
+        this.trigger({message: 'Failed to load article.'});
+      });
+  },
+  onDocUpdate (id, body) {
+    // put
+    ajax.put('/service/article/' + id, body)
+      .then((res) => {
+        this.trigger({article: res, submitted: true});
+      })
+      .catch((xhr) => {
+        let res, msg;
+        if(xhr.hasTimeout) {
+          msg = 'Request timeout.';
+        }
+        else {
+          if(xhr.status == 0) {
+            msg = 'Can\'t connect to server.';
+          }
+          else {
+            try {
+              res = JSON.parse(xhr.response);
+              msg = res.msg || 'Unexpected error.';
+            }
+            catch(e) {
+              msg = 'Unknown response.';
+            }
+          }
+        }
+
+        this.trigger({message: msg});
+      });
+  },
+  onRemoveDocCompleted (res) {
+    console.log(res);
+    this.trigger({});
+  },
+  onRemoveDocFailed(res) {
+    console.log(res);
+    this.trigger({});
   }
 });

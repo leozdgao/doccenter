@@ -70,7 +70,7 @@ export default React.createClass({
           </ul>
         </div>
         <div className={this.state.modeControlStyle["pEditor"]}>
-          <textarea ref="editor" name="content" onChange={this._onChange}></textarea>{/*style={{height: this.state.editorHeight + 'px'}}*/}
+          <textarea ref="editor" name="content" value={this.props.content} onChange={this._onChange}></textarea>{/*style={{height: this.state.editorHeight + 'px'}}*/}
         </div>
         <div className={this.state.modeControlStyle["pPreview"]} ref="preview" dangerouslySetInnerHTML={{__html: marked(this.props.content, { renderer: renderer })}}></div>
         <div className="md-spliter"></div>
