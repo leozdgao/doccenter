@@ -24,9 +24,9 @@ export default React.createClass({
   },
   render () {
     let article = this.props.article;
-    let tags = article.tags.map((t) => {
+    let tags = article.tags.map((t, i) => {
       return (
-        <span className="tag">{t}</span>
+        <span key={i} className="tag">{t}</span>
       );
     });
 

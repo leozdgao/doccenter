@@ -11,7 +11,7 @@ export default React.createClass({
     let tags = this.props.tags, items;
     if(tags.length > 0) {
       items = tags.map((item, i) => {
-        return (<Link className="tag" to="docs" query={{t: item}}>{item}</Link>);
+        return (<Link key={i} className="tag" to="docs" query={{t: item}}>{item}</Link>);
       });
     }
     else items = (
