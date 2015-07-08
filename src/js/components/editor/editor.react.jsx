@@ -1,5 +1,6 @@
 import React from 'react';
 import marked from 'marked';
+import Uploader from './uploader.react';
 
 let renderer = new marked.Renderer(), seed = 0;
 renderer.heading = function (text, level) {
@@ -68,10 +69,7 @@ export default React.createClass({
             <li className="tb-btn"><a title="UL" onClick={this._listUlText}><i className="fa fa-list-ul"></i></a></li> {/* list-ul */}
             <li className="tb-btn"><a title="Header2" onClick={this._headerText}><i className="fa fa-header"></i></a></li> {/* header */}
             <li className="tb-btn spliter"></li>
-            <li className="tb-btn">
-              <a title="Attachments" onClick={this._addAttachments}><i className="fa fa-paperclip"></i></a>
-              <input ref="uploader" type="file" name="attachments" onChange={this._fileChange} />
-            </li> {/* attachments */}
+            <Uploader /> {/* attachments */}
           </ul>
         </div>
         <div className={this.state.modeControlStyle["pEditor"]}>
@@ -82,15 +80,15 @@ export default React.createClass({
       </div>
     );
   },
-  _addAttachments () {
-    let uploader = this.refs.uploader.getDOMNode();
-    uploader.click();
-  },
-  _fileChange () {
-    // upload file here
-    let uploader = this.refs.uploader.getDOMNode();
-    console.log(uploader.files);
-  },
+  // _addAttachments () {
+  //   let uploader = this.refs.uploader.getDOMNode();
+  //   uploader.click();
+  // },
+  // _fileChange () {
+  //   // upload file here
+  //   let uploader = this.refs.uploader.getDOMNode();
+  //   console.log(uploader.files);
+  // },
   _onChange (e) {
       this.props.refreshState(this.textControl.value); // change state
   },

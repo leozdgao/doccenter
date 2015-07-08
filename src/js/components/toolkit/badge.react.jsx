@@ -9,7 +9,7 @@ import React from 'react';
 export default React.createClass({
   render () {
     return (
-      <i className="badge" {...props}>{this.props.value}</i>
+      <i className="badge" {...this.props}>{this.props.value}</i>
     );
   }
 });
