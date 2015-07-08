@@ -39,6 +39,10 @@ export function ensure(obj) {
   return obj;
 }
 
+export function arrayFrom(arrayLike) {
+  return Array.prototype.slice.call(arrayLike);
+}
+
 export function ajax({
   method='GET',
   url, body,

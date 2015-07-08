@@ -2,7 +2,6 @@ var url = require('url');
 var request = require('request');
 var router = require('express').Router();
 var Article = require('../model/article');
-// var proxy = require('../util/proxy');
 var proxyConfig = require('../../config').proxy;
 var proxyUrl = proxyConfig['/att'];
 
@@ -17,11 +16,18 @@ router.get('/:att_key', function(req, res, next) {
   req.pipe(proxy).pipe(res);
 });
 
-router.post('/', function() {
-  // proxy(proxyUrl)
-  //   .then(function(pres) {
-  //     // add attachments entry
-  //   });
+router.post('/:aid', function(req, res, next) {
+  var aid = req.params.aid;
+  var proxy = request(url.resolve(proxyUrl, key));
+  proxy.on('response', function(pres) {
+    Article.update(aid, {attachments: { $pull: pres.key }})
+      .then(function(article) {
+        res.json(article);
+      })
+      .catch(function(e) {
+        next(e);
+      });
+  });
 });
 
 router.delete('/:att_key', function() {

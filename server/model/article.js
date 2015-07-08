@@ -25,6 +25,11 @@ exports.query = Article.findAsync.bind(Article);
 
 exports.post = function(obj) {
   var newArticle = new Article(obj);
+  if(obj.attachments && obj.attachments.length > 0) {
+    obj.attachments.map(function(att) {
+      
+    });
+  }
   return newArticle.saveAsync();
 };
 

@@ -14,6 +14,7 @@ export default React.createClass({
       title: '',
       tags: [],
       content: '',
+      attachments: [],
       message: '',
       validation: {
         title: true,

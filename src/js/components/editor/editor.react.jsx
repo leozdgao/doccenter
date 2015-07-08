@@ -67,6 +67,11 @@ export default React.createClass({
             <li className="tb-btn"><a title="OL" onClick={this._listOlText}><i className="fa fa-list-ol"></i></a></li> {/* list-ol */}
             <li className="tb-btn"><a title="UL" onClick={this._listUlText}><i className="fa fa-list-ul"></i></a></li> {/* list-ul */}
             <li className="tb-btn"><a title="Header2" onClick={this._headerText}><i className="fa fa-header"></i></a></li> {/* header */}
+            <li className="tb-btn spliter"></li>
+            <li className="tb-btn">
+              <a title="Attachments" onClick={this._addAttachments}><i className="fa fa-paperclip"></i></a>
+              <input ref="uploader" type="file" name="attachments" onChange={this._fileChange} />
+            </li> {/* attachments */}
           </ul>
         </div>
         <div className={this.state.modeControlStyle["pEditor"]}>
@@ -74,16 +79,20 @@ export default React.createClass({
         </div>
         <div className={this.state.modeControlStyle["pPreview"]} ref="preview" dangerouslySetInnerHTML={{__html: marked(this.props.content, { renderer: renderer })}}></div>
         <div className="md-spliter"></div>
-        {/*<div className="md-resizer" ref="resizer" onMouseDown={this._mousedown} onDragStart={this._dragstart}></div>*/}
       </div>
     );
   },
+  _addAttachments () {
+    let uploader = this.refs.uploader.getDOMNode();
+    uploader.click();
+  },
+  _fileChange () {
+    // upload file here
+    let uploader = this.refs.uploader.getDOMNode();
+    console.log(uploader.files);
+  },
   _onChange (e) {
-    // if(this._ltr) clearTimeout(this._ltr);
-
-    // this._ltr = setTimeout(() => {
       this.props.refreshState(this.textControl.value); // change state
-    // }, 300);
   },
   _preInputText (text, preStart, preEnd) {
     let start = this.textControl.selectionStart,
