@@ -125,7 +125,7 @@ export default React.createClass({
           type: 'confirm',
           width: 400,
           onConfirm: () => {
-            return ajax.delete(this.props.url + file.key);
+            return ajax.delete(this.props.url + file.key, {}, 0);
           },
           onClose: (ret) => {
             if(ret) { // user press confirm
