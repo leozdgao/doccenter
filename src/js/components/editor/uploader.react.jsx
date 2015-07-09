@@ -73,7 +73,7 @@ export default React.createClass({
   // whether has xhr which is still requesting
   hasRequesting () {
     let fileList = this.state.fileList;
-    for(let i = 0, l = .length; i < l; i++) {
+    for(let i = 0, l = fileList.length; i < l; i++) {
       let f = fileList[i];
       if(f.state < 0)  return true;
     }

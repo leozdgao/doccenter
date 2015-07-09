@@ -42,7 +42,7 @@ export default React.createClass({
       if(!this._checkValidate(key, this.state[key])) return;
     }
 
-    this.refs.editor
+    // this.refs.editor
 
     // post
     ajax.post(this.props.postUrl, this.state)
