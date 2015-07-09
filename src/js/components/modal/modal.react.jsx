@@ -13,6 +13,16 @@ export function showModal(content, props, container) {
   return React.render(<Modal {...props}>{content}</Modal>, container);
 }
 
+let container;
+export function getDefaultContainer() {
+  if(!container) {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+  }
+
+  return container;
+}
+
 var Modal = React.createClass({
   getDefaultProps: function() {
     return {
@@ -54,12 +64,6 @@ var Modal = React.createClass({
       </div>
     );
   },
-  // show () {
-  //   if(!this.state.visible) this.setState({visible: true});
-  // },
-  // close () {
-  //   if(this.state.visible) this.setState({visible: false});
-  // },
   _adjustPosition () {
     let vpWidth = document.documentElement.clientWidth || document.body.clientWidth;
     let mdWidth = this.props.width;

@@ -69,7 +69,7 @@ export default React.createClass({
             <li className="tb-btn"><a title="UL" onClick={this._listUlText}><i className="fa fa-list-ul"></i></a></li> {/* list-ul */}
             <li className="tb-btn"><a title="Header2" onClick={this._headerText}><i className="fa fa-header"></i></a></li> {/* header */}
             <li className="tb-btn spliter"></li>
-            <Uploader /> {/* attachments */}
+            <Uploader ref="uploader" url={this.props.fileUploadUrl} /> {/* attachments */}
           </ul>
         </div>
         <div className={this.state.modeControlStyle["pEditor"]}>

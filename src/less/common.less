@@ -9,7 +9,6 @@
 
   &:focus {
     outline: 0;
-    // box-shadow: 0 0 5px $light_color;
   }
 }
 .btn {
@@ -37,9 +36,6 @@
       background-color: @primary_disable_color;
       cursor: auto;
     }
-    // &:active, &:hover {
-    //   background-color: $primary_color;
-    // }
   }
   &.default {
     background-color: #fff;
@@ -104,6 +100,25 @@
   }
 }
 
+.close {
+  float: right;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .2;
+  cursor: pointer;
+}
+
 .pull-right {
   float: right !important;
 }
+
+.error { color: @errorColor }
+.warning { color: @warningColor }
+.success { color: @successColor }
+
+.bkg-error { background-color: @errorColor }
+.bkg-warning { background-color: @warningColor }
+.bkg-success { background-color: @successColor }

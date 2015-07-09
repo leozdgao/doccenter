@@ -1,7 +1,7 @@
 var router = require('express').Router();
 
 router.use('/article', require('./article'));
-router.use('/att', require('./att'));
+router.use('/file', require('./file'));
 // may be other services here
 
 module.exports = router;

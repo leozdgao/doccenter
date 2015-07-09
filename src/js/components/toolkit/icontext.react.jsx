@@ -6,8 +6,9 @@ export default React.createClass({
     iconClassName: React.PropTypes.string
   },
   render () {
+    let {className, title} = this.props;
     return (
-      <span className={this.props.className}>
+      <span className={className} title={title}>
         <i className={this.props.iconClassName}></i><span>{this.props.text}</span>
       </span>
     );

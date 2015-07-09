@@ -10,7 +10,10 @@ var articleSchema = new Schema({
     priority: { type: Number, default: 0 },
     content: { type: String, required: true },
     comments: { type: Array },
-    attachments: { type: [Schema.Types.ObjectId] }
+    attachments: { type: [{
+      key: String,
+      name: String
+    }] }
 }, { collection: 'articles', versionKey: false });
 
 var Article = mongoose.model('Article', articleSchema);
@@ -27,7 +30,7 @@ exports.post = function(obj) {
   var newArticle = new Article(obj);
   if(obj.attachments && obj.attachments.length > 0) {
     obj.attachments.map(function(att) {
-      
+
     });
   }
   return newArticle.saveAsync();

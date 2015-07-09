@@ -4,6 +4,7 @@ import Editor from './editor.react';
 import TitleInput from './title.react';
 import ButtonGroup from './buttongroup.react';
 import { isEmptyString, isDefined, isString, ajax } from '../../util';
+import Constant from '../../constant';
 
 export default React.createClass({
   propTypes: {
@@ -28,7 +29,7 @@ export default React.createClass({
         <h2 className="icon-text"><i className="fa fa-file-text-o"></i> Write Document</h2>
         <TitleInput title={this.state.title} refreshState={this._refreshState('title')} validate={this.state.validation.title} />
         <TagInput tags={this.state.tags} refreshState={this._refreshState('tags')} />
-        <Editor content={this.state.content} refreshState={this._refreshState('content')} validate={this.state.validation.content} />
+        <Editor ref="editor" content={this.state.content} refreshState={this._refreshState('content')} validate={this.state.validation.content} fileUploadUrl={Constant.FILEUPLOADURL} />
         <ButtonGroup submit={this._submit} message={this.state.message} />
       </form>
     );
@@ -40,6 +41,9 @@ export default React.createClass({
     for(let key in validation) if(validation.hasOwnProperty(key)) {
       if(!this._checkValidate(key, this.state[key])) return;
     }
+
+    this.refs.editor
+
     // post
     ajax.post(this.props.postUrl, this.state)
       .then((res) => {

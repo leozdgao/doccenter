@@ -25,7 +25,19 @@
 
 /* Badge */
 .badge {
-
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 10px;
+  font-weight: bold;
+  font-style: normal;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-color: steelblue;
+  border-radius: 10px;
 }
 
 /* Style for Tag Input */
@@ -145,22 +157,6 @@
     right: 0;
     bottom: 0;
   }
-}
-
-.badge {
-  display: inline-block;
-  min-width: 10px;
-  padding: 3px 7px;
-  font-size: 10px;
-  font-weight: bold;
-  font-style: normal;
-  line-height: 1;
-  color: #fff;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  background-color: steelblue;
-  border-radius: 10px;
 }
 
 .md-editor {
@@ -283,8 +279,33 @@
 }
 
 .file-entry {
-  overflow: hidden;
-  text-overflow: ellipsis;
+  position: relative;
   padding: 10px;
   border-bottom: 1px solid #eee;
+
+  .icon-text span {
+    display: inline-block;
+    width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    cursor: default;
+  }
+
+  .close {
+    font-size: 18px;
+    transition: all .2s;
+
+    &:hover {
+      opacity: .8;
+    }
+  }
+}
+
+.brand {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 5px;
+  height: 100%;
 }
