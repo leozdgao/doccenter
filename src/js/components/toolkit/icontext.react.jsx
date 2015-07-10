@@ -9,7 +9,7 @@ export default React.createClass({
     let {className, title} = this.props;
     return (
       <span className={className} title={title}>
-        <i className={this.props.iconClassName}></i><span>{this.props.text}</span>
+        <i className={this.props.iconClassName}></i><span>{this.props.text || this.props.children}</span>
       </span>
     );
   }

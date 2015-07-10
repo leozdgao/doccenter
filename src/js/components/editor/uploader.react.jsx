@@ -1,13 +1,18 @@
 import React from 'react';
 import Badge from '../toolkit/badge.react';
 import IconText from '../toolkit/icontext.react';
-import Modal, {showModal, getDefaultContainer} from '../modal/modal.react';
+import Modal, {showModal} from '../modal/modal.react';
 import {arrayFrom, ajax} from '../../util';
 
 export default React.createClass({
   componentDidMount: function() {
     this._reqs = []; // preserve xhr
     this.uploader = this.refs.uploader.getDOMNode();
+  },
+  getDefaultProps: function() {
+    return {
+      staticList: [] // static list
+    };
   },
   /**
    *  file state: {
@@ -18,13 +23,13 @@ export default React.createClass({
    */
   getInitialState: function() {
     return {
-      fileList: [],
+      fileList: this.props.staticList.map((f) => { return { key: f.key, name: f.name, state: 1 } }),
       panelShowed: false
     };
   },
   render () {
-    let count = this.state.fileList.length; console.log('render');
-    let files = this.state.fileList.map((file, i) => {
+    let count = this.state.fileList.length, fileList = this.state.fileList;
+    let files = fileList.map((file, i) => {
       let brandClass;
       switch (file.state) {
         case 0: brandClass = 'bkg-error'
@@ -63,12 +68,10 @@ export default React.createClass({
   },
   // public method
   getFiles () {
-    return this.state.fileList.map((f) => {
-      return {
-        key: f.key,
-        name: f.name
-      }
-    });
+    return this.state.fileList.reduce((ret, next) => {
+      if(next.state > 0) ret.push({key: next.key, name: next.name});
+      return ret;
+    }, []);
   },
   // whether has xhr which is still requesting
   hasRequesting () {
@@ -100,7 +103,7 @@ export default React.createClass({
       else if(file.state == -1) { // abort request
         let content = (
           <div>Abort uploading ?</div>
-        ), container = getDefaultContainer();
+        );
 
         this.d = showModal(content, {
           type: 'confirm',
@@ -113,13 +116,13 @@ export default React.createClass({
               this.setState({fileList: fileList, panelShowed: !!fileList.length});
             }
           }
-        }, container);
+        });
       }
       else {
         // show modal
         let content = (
           <div>Remove this attachment ?</div>
-        ), container = getDefaultContainer();
+        );
 
         this.d = showModal(content, {
           type: 'confirm',
@@ -131,9 +134,11 @@ export default React.createClass({
             if(ret) { // user press confirm
               fileList.splice(i, 1);
               this.setState({fileList: fileList, panelShowed: !!fileList.length});
+              this._emitChange(); //change
+              this.props.afterRemove && this.props.afterRemove(file.key);
             }
           }
-        }, container);
+        });
       }
     }
   },
@@ -151,26 +156,28 @@ export default React.createClass({
       (function(i) {
         let data = new FormData();
         data.append('file', file);
-        self._reqs[i] = ajax({ // send request and preserve
+        this._reqs[i] = ajax({ // send request and preserve
           method: 'POST',
           url: url,
           body: data,
           timeout: 0 // don't set timeout
         }, (res) => {
           let response = res[0][0]; // single file upload
-          let fileList = self.state.fileList;
+          let fileList = this.state.fileList;
           fileList[i].key = response && response.key;
           fileList[i].state = 1;
-          self.setState({fileList: fileList});
+          this.setState({fileList: fileList});
+          this._emitChange();
+          this.props.afterAdd && this.props.afterAdd(fileList[i].key, fileList[i].name);
         }, () => {
           let fileList = self.state.fileList;
           fileList[i].state = 0;
-          self.setState({fileList: fileList});
+          this.setState({fileList: fileList});
         });
-      })(findex);
+      }.bind(this))(findex);
     }
     if(fileList.length > 0) { // update state here
-      this.setState({fileList: fileList, panelShowed: true});
+      this.setState({fileList: fileList, panelShowed: true}); // don't emit change here, because the file not upload yet and haven't key
     }
     // clear file input
     this._clearInputFile();
@@ -192,5 +199,25 @@ export default React.createClass({
   },
   _abortAllRequesting () {
     this._reqs.map((xhr) => { xhr.abort() });
+  },
+  _discard () {
+    this._abortAllRequesting();
+    this.state.fileList.map((f) => { console.log(f);
+      if(f.state > 0 && !this._isStaticKey(f.key)) {
+        ajax.delete(this.props.url + f.key, {}, 0); // send request, not care about fulfilled or not
+      }
+    });
+  },
+  _isStaticKey (key) {
+    let slist = this.props.staticList;
+    for(let i = 0, l = slist.length; i < l; i++) {
+      let f = slist[i];
+      if(f.key == key) return true;
+    }
+
+    return false;
+  },
+  _emitChange () {
+    this.props.onChange && this.props.onChange();
   }
 });

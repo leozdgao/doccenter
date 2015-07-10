@@ -31,7 +31,7 @@ export default React.createClass({
   componentDidMount () {
     docActions.page(this.state.page, this.state.conditions); // trigger action
     docActions.tags();
-    docStore.listen((ret) => {
+    docStore.listen((ret) => { console.log(ret);
       if(!ret.fail) {
         let {count, tags, list} = ret;
         this.setState(ensure({

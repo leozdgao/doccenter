@@ -1,6 +1,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var attSchema = new Schema({
+  key: String,
+  name: String
+}, {_id: false});
+
 var articleSchema = new Schema({
     _id: { type: Schema.Types.ObjectId, auto: true },
     title: { type: String, required: true },
@@ -10,10 +15,7 @@ var articleSchema = new Schema({
     priority: { type: Number, default: 0 },
     content: { type: String, required: true },
     comments: { type: Array },
-    attachments: { type: [{
-      key: String,
-      name: String
-    }] }
+    attachments: { type: [attSchema], default: [] }
 }, { collection: 'articles', versionKey: false });
 
 var Article = mongoose.model('Article', articleSchema);

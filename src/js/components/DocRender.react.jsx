@@ -19,7 +19,8 @@ export default React.createClass({
         _id: '',
         title: '',
         tags: [],
-        content: ''
+        content: '',
+        attachments: []
       },
       badload: false
     }

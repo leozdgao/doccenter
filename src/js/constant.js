@@ -1,3 +1,4 @@
 module.exports = {
-  FILEUPLOADURL: '/service/file/' // file upload
+  FILEUPLOADURL: '/service/file/', // file upload
+  ARTICLEURL: '/service/article/'
 }

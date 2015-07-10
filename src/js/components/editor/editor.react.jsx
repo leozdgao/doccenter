@@ -69,7 +69,8 @@ export default React.createClass({
             <li className="tb-btn"><a title="UL" onClick={this._listUlText}><i className="fa fa-list-ul"></i></a></li> {/* list-ul */}
             <li className="tb-btn"><a title="Header2" onClick={this._headerText}><i className="fa fa-header"></i></a></li> {/* header */}
             <li className="tb-btn spliter"></li>
-            <Uploader ref="uploader" url={this.props.fileUploadUrl} /> {/* attachments */}
+            <Uploader ref="uploader" url={this.props.fileUploadUrl} onChange={this._onAttachmentChange} staticList={this.props.attachments}
+              afterRemove={this.props.afterRemoveAttachment} afterAdd={this.props.afterAddAttachment} /> {/* attachments */}
           </ul>
         </div>
         <div className={this.state.modeControlStyle["pEditor"]}>
@@ -80,25 +81,28 @@ export default React.createClass({
       </div>
     );
   },
-  // _addAttachments () {
-  //   let uploader = this.refs.uploader.getDOMNode();
-  //   uploader.click();
-  // },
-  // _fileChange () {
-  //   // upload file here
-  //   let uploader = this.refs.uploader.getDOMNode();
-  //   console.log(uploader.files);
-  // },
+  abort () {
+    this.refs.uploader._abortAllRequesting();
+  },
+  discard () {
+    this.refs.uploader._discard();
+  },
+  checkRequesting () {
+    return this.refs.uploader.hasRequesting();
+  },
   _onChange (e) {
-      this.props.refreshState(this.textControl.value); // change state
+    this.props.refreshState(this.textControl.value); // change state
+  },
+  _onAttachmentChange() {
+    this.props.refreshAttachment(this.refs.uploader.getFiles());
   },
   _preInputText (text, preStart, preEnd) {
     let start = this.textControl.selectionStart,
         end = this.textControl.selectionEnd,
-        origin = this.textControl.value
+        origin = this.textControl.value;
 
     if(start != end) {
-      let exist = origin.slice(start, end); console.log(exist);
+      let exist = origin.slice(start, end);
       text = text.slice(0, preStart) + exist + text.slice(preEnd);
       preEnd = preStart + exist.length;
     }

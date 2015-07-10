@@ -3,6 +3,7 @@ import React from 'react';
 function noop() {}
 
 export function showModal(content, props, container) {
+  if(!container) container = getDefaultContainer();
   let closing = props.onClose;
   props.onClose = (redirect) => {
     if(closing) closing(redirect);
