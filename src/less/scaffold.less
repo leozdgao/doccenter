@@ -36,6 +36,14 @@
     color: @sidebarTextColor;
     text-shadow: 0 0 1px #333;
 
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: center;
+    }
+
     &:hover {
       background-color: @sidebarHoverColor;
       color: @sidebarActiveColor;
@@ -46,13 +54,10 @@
       color: @sidebarActiveColor;
 
       &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
         height: 100%;
         width: 5px;
-        background-color: @color
+        background-color: @color;
+        animation: scaleYOut .4s ease;
       }
     }
   }
