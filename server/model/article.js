@@ -64,10 +64,3 @@ exports.tags = function() {
   };
   return Article.mapReduceAsync(o);
 }
-
-// exports.page = function(match, limit, page) {
-//   return Tip.aggregateAsync([{ $match: match },
-//     { $sort: { priority: -1, date: -1 } },
-//     { $skip: (page - 1) * limit },
-//     { $limit: limit } ])
-// }
