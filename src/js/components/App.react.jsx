@@ -9,7 +9,7 @@ export default React.createClass({
         {/*side bar here*/}
         <Sidebar />
         {/*content*/}
-        <div className="content-container">
+        <div className="page-wrapper">
           <RouteHandler/>
         </div>
       </div>
