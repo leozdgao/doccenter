@@ -16,6 +16,8 @@ var sourcemaps = require('gulp-sourcemaps');
 var webpack = require('gulp-webpack');
 var connect = require('gulp-connect');
 var open = require('gulp-open');
+var nodemon = require('gulp-nodemon');
+var livereload = require('gulp-livereload');
 
 // release
 gulp.task('default', ['release']);
@@ -37,7 +39,8 @@ gulp.task('release:css', function() {
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(files.release))
         // livereload when develop
-        .pipe(connect.reload());
+        // .pipe(connect.reload());
+        .pipe(livereload());
 });
 
 gulp.task('release:js', function() { // add jslint and uTest later maybe
@@ -47,7 +50,8 @@ gulp.task('release:js', function() { // add jslint and uTest later maybe
         .pipe(webpack(require('./webpack.config.js')))
         .pipe(gulp.dest(files.release))
         // livereload when develop
-        .pipe(connect.reload());
+        // .pipe(connect.reload());
+        .pipe(livereload());
 });
 
 gulp.task('copy:vendor', function() {
@@ -57,38 +61,16 @@ gulp.task('copy:vendor', function() {
 
 //-----------------------------------------------> for dev
 
-gulp.task('dev', ['serve'], function() {
-    if (files.entry) {
-        var opts = {
-            url: "http://localhost:8080",
-            app: getChromeAppName()
-        };
+gulp.task('dev', ['release'], function() {
+  livereload.listen();
 
-        gulp.src(files.entry)
-            .pipe(open('', opts));
-    }
-});
-
-gulp.task('serve', ['release', 'watch'], function() {
-
-    connect.server({
-        root: files.release,
-        livereload: true
-    });
-});
-
-gulp.task('reloadView', function() {
-
-    //views
-    return gulp.src(files.views)
-        .pipe(connect.reload());
-});
-
-gulp.task('watch', function() {
-
-    gulp.watch(files.js, ['release:js']);
-    gulp.watch(files.css, ['release:css']);
-    gulp.watch(files.views, ['reloadView']);
+  nodemon({
+    script: 'server/server.js',
+    watch: ['src/', 'server/', 'util/'],
+    ext: 'js jsx less html',
+    env: { 'NODE_ENV': 'development' },
+    tasks: ['release']
+  });
 });
 
 function getChromeAppName() {

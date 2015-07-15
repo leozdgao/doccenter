@@ -11,6 +11,13 @@ export default React.createClass({
       this.setState(ret);
     });
   },
+  getInitialState: function() {
+    return {
+      show: false,
+      title: '',
+      breadcrumbs: {}
+    };
+  },
   render () {
     return (
       <div>

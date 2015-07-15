@@ -3,8 +3,9 @@ import pageheaderActions from '../actions/pageheaderActions';
 
 export default Reflux.createStore({
   init () {
-    this.listenToMany(docActions);
+    this.listenToMany(pageheaderActions);
   },
   onChange (title, breadcrumbs) {
     this.trigger({ title, breadcrumbs });
   }
+});
