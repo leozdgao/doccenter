@@ -1,5 +1,7 @@
 @prefixSideClass: sidebar;
 @contentClass: page-wrapper;
+@headerClass: page-heading;
+@breadcrumbClass: breadcrumb;
 
 .@{prefixSideClass} {
   position: fixed;
@@ -73,5 +75,30 @@
 
 .@{contentClass} {
   margin-left: @sidebarWidth;
-  padding: 20px 25px 0 25px;
+}
+
+.@{headerClass} {
+  padding: 0px 10px 20px 35px;
+}
+
+.@{breadcrumbClass} {
+  background-color: #fff;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 0;
+
+  &>li {
+    display: inline-block;
+    &:not(:first-child):before {
+      padding: 0 5px;
+      color: #ccc;
+      content: "/\00a0";
+    }
+
+    &:last-child {
+      font-weight: 600;
+    }
+
+    a { color: inherit; }
+  }
 }

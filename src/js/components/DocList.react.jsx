@@ -1,6 +1,7 @@
 import React from 'react';
 import docActions from '../actions/docActions';
 import docStore from '../stores/docStore';
+import PageHeaderActions from '../actions/pageheaderActions';
 import List from './list/doclist.react';
 import TagPanel from './list/tagpanel.react';
 import {isInteger, isDefined, ensure} from '../util';
@@ -12,6 +13,8 @@ export default React.createClass({
       if(isDefined(page) && !isInteger(Number(page))) { // check page
         transition.redirect('docs');
       }
+
+      PageHeaderActions.change({breadcrumbs: [{text: 'Home', link: '/'}, { text: 'Documents' }]});
     },
   },
   getInitialState () {
@@ -31,7 +34,7 @@ export default React.createClass({
   componentDidMount () {
     docActions.page(this.state.page, this.state.conditions); // trigger action
     docActions.tags();
-    docStore.listen((ret) => { console.log(ret);
+    docStore.listen((ret) => {
       if(!ret.fail) {
         let {count, tags, list} = ret;
         this.setState(ensure({

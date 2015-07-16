@@ -15,7 +15,7 @@ export default React.createClass({
     return {
       show: false,
       title: '',
-      breadcrumbs: {}
+      breadcrumbs: []
     };
   },
   render () {
@@ -24,7 +24,7 @@ export default React.createClass({
         {/*side bar here*/}
         <Sidebar />
         {/*content*/}
-        <div className="page-wrapper">
+        <div className="page-wrapper bkg-grey">
           <PageHeader show={this.state.show} title={this.state.title} breadcrumbs={this.state.breadcrumbs} />
           <RouteHandler />
         </div>

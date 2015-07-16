@@ -15,5 +15,8 @@ module.exports = {
   },
   proxy: {
     '/att': process.env['PROXY_ATTACHMENT'] || "http://10.10.73.209:8000/"
+  },
+  dev: {
+    hotServerPort: 3000
   }
 };

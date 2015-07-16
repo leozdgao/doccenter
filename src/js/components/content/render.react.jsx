@@ -19,7 +19,7 @@ export default React.createClass({
     setTimeout(() => {
       let article = React.findDOMNode(this.refs.article);
       article.innerHTML = this.props.content;
-      let indexer = AutoIndexer.createIndexer();
+      let indexer = AutoIndexer.createIndexer({maxLevel: 4});
       let index = indexer(article);
       this.props.onIndexed(index);
     }, 1000);

@@ -1,44 +1,5 @@
-var path = require('path');
-var webpack = require('webpack');
-var glob = require('glob');
+require("babel-core/register");
 
-function getEntries() {
-    var entries = {};
-    glob.sync(__dirname + '/src/**/*.main.js').forEach(function (name) {
-        var n = name.match(/\/([^\/]+?).main.js/)[1];
-        entries[n] = name
-    });
-    return entries;
-}
+var _ = require('lodash');
 
-module.exports = {
-    entry: getEntries(),
-    output: {
-        path: path.join(__dirname, './dist'),
-        filename: '[name].min.js',
-        sourceMapFilename: '[file].map'
-    },
-    externals: {
-        'react': 'React',
-        'react-router': 'ReactRouter',
-        'marked': 'marked',
-        'highlight': 'hljs',
-        'reflux': 'Reflux'
-    },
-    devtool: 'source-map',
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin()
-    ],
-    module: {
-        loaders: [
-            {
-                test: /\.jsx?$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel'
-            }
-        ]
-    },
-    resolve: {
-        extensions: ['', '.js', '.jsx']
-    }
-}
+module.exports = _.assign({}, require('./webpack/webpack'));

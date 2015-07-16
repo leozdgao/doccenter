@@ -5,7 +5,7 @@ export default Reflux.createStore({
   init () {
     this.listenToMany(pageheaderActions);
   },
-  onChange (title, breadcrumbs) {
-    this.trigger({ title, breadcrumbs });
+  onChange (obj) {
+    this.trigger(obj);
   }
 });
