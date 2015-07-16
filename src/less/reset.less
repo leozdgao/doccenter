@@ -5,5 +5,8 @@ body {
   color: #676a6c;
 }
 input { outline: 0; &::-ms-clear { display: none; } }
-a { text-decoration: none; }
+a, a:focus, a:hover {
+  text-decoration: none;
+  outline: 0;
+}
 h1, h2, h3, h4, h5, h6 { margin-top: 20px; margin-bottom: 10px; }

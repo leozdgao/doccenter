@@ -1,0 +1,32 @@
+@iboxClass: ibox;
+@contentWrapperClass: wrapper-content;
+
+.@{contentWrapperClass} {
+  padding: 20px 10px 40px;
+}
+
+.@{iboxClass} {
+  clear: both;
+  margin-bottom: 25px;
+  margin-top: 0;
+  padding: 0;
+}
+
+.@{iboxClass}-title {
+  padding: 14px 15px 7px;
+  border-top: 4px solid @iboxTitleBorderColor;
+  border-image: none;
+  color: inherit;
+  background: #fff;
+  margin: 0;
+  min-height: 48px;
+
+  h1, h2, h3, h4, h5, h6 { margin: 0; }
+}
+
+.@{iboxClass}-content {
+  background-color: #ffffff;
+  color: inherit;
+  padding: 15px 20px 20px 20px;
+  border-top: 1px solid @iboxTitleBorderColor;
+}

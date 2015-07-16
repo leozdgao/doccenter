@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
+import cNames from 'classnames';
 import Pagination from './pagination.react';
 import SearchBox from './searchbox.react';
 import {dateFormat} from '../../util';
@@ -49,10 +50,12 @@ export default React.createClass({
       if(slips.length == 0) slips = (<span className="help-text">No documents now...</span>);
 
       return (
-        <div className="doclist">
-          <SearchBox />
-          {slips}
-          <Pagination page={this.props.page} sum={this.props.sum} />
+        <div className="doclist ibox">
+          <div className="ibox-content">
+            <SearchBox />
+            {slips}
+            <Pagination page={this.props.page} sum={this.props.sum} />
+          </div>
         </div>
       );
     }

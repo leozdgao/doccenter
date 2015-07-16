@@ -57,9 +57,13 @@ export default React.createClass({
   // request list and do pagination here
   render () {
     return (
-      <div className="vessel">
-        <TagPanel tags={this.state.tags} loadFail={this.state.tagFail} />
-        <List docs={this.state.list} page={this.state.page} sum={this.state.pageSum} loadFail={this.state.pageFail} loading={this.state.pageLoading} />
+      <div className="wrapper-content clearfix">
+        <div className="col-md-11">
+          <List docs={this.state.list} page={this.state.page} sum={this.state.pageSum} loadFail={this.state.pageFail} loading={this.state.pageLoading} />
+        </div>
+        <div className="col-md-5">
+          <TagPanel tags={this.state.tags} loadFail={this.state.tagFail} />
+        </div>
       </div>
     );
   },
