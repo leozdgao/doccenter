@@ -4,6 +4,7 @@ import docStore from '../stores/docStore';
 import PageHeaderActions from '../actions/pageheaderActions';
 import List from './list/doclist.react';
 import TagPanel from './list/tagpanel.react';
+import Fluid from './toolkit/fluid.react';
 import {isInteger, isDefined, ensure} from '../util';
 
 export default React.createClass({

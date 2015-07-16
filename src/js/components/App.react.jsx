@@ -3,6 +3,7 @@ import {RouteHandler} from 'react-router';
 import PageHeaderStore from '../stores/pageheaderStore';
 import PageHeader from './scaffold/pageheader.react';
 import Sidebar from './scaffold/sidebar.react';
+import Fluid from './toolkit/fluid.react';
 
 export default React.createClass({
   componentDidMount () {
@@ -24,10 +25,10 @@ export default React.createClass({
         {/*side bar here*/}
         <Sidebar />
         {/*content*/}
-        <div className="page-wrapper bkg-grey">
+        <Fluid className="page-wrapper bkg-grey">
           <PageHeader show={this.state.show} title={this.state.title} breadcrumbs={this.state.breadcrumbs} />
           <RouteHandler />
-        </div>
+        </Fluid>
       </div>
     );
   }
