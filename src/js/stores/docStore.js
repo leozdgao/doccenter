@@ -2,6 +2,8 @@ import Reflux from 'reflux';
 import docActions from '../actions/docActions';
 import {ajax, querystring, ensure} from '../util';
 
+export let cache = {}; // cache name only
+
 export default Reflux.createStore({
   init () {
     this.listenToMany(docActions);
@@ -28,6 +30,10 @@ export default Reflux.createStore({
         return ajax.get('/service/article?'+qs);
       })
       .then((res) => {
+        // cache names here
+        res.forEach((article) => {
+          cache[article._id] = article.title;
+        });
         this.trigger({list: res, count: count});
       })
       .catch((e) => {

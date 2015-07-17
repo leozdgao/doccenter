@@ -15,7 +15,7 @@ export default React.createClass({
         transition.redirect('docs');
       }
 
-      PageHeaderActions.change({breadcrumbs: [{text: 'Home', link: '/'}, { text: 'Documents' }]});
+      PageHeaderActions.change({breadcrumbs: [{text: 'Home', link: {to: 'overview'}}, { text: 'Documents' }]});
     },
   },
   getInitialState () {
@@ -29,8 +29,10 @@ export default React.createClass({
     };
   },
   componentWillReceiveProps (props) {
-    docActions.page(this._getPage(props.query), this._getConditions(props.query)); // tigger action
-    this.setState({pageLoading: true});
+    if(this.props.query != props.query || this.props.params != props.params) {
+      docActions.page(this._getPage(props.query), this._getConditions(props.query)); // tigger action
+      this.setState({pageLoading: true});
+    }
   },
   componentDidMount () {
     docActions.page(this.state.page, this.state.conditions); // trigger action
@@ -58,7 +60,7 @@ export default React.createClass({
   // request list and do pagination here
   render () {
     return (
-      <div className="wrapper-content clearfix">
+      <div className="wrapper-content">
         <div className="col-md-11">
           <List docs={this.state.list} page={this.state.page} sum={this.state.pageSum} loadFail={this.state.pageFail} loading={this.state.pageLoading} />
         </div>

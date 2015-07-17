@@ -37,8 +37,8 @@ export default React.createClass({
     });
 
     return (
-      <div className="render">
-        <div className="header">
+      <div className="ibox render">
+        <div className="ibox-title header">
           <h1>{article.title}</h1>
           {article.tags.length > 0 ? (
             <div className="tags">
@@ -60,7 +60,7 @@ export default React.createClass({
             ): null}
           </div>
         </div>
-        <div ref="article" className="markdown"></div>
+        <div ref="article" className="ibox-content markdown"></div>
         {/*<CommentBox />*/}
       </div>
     );

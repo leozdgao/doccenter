@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 
 export default React.createClass({
   getDefaultProps: function() {
@@ -7,12 +8,12 @@ export default React.createClass({
     };
   },
   render () {
-    let items = this.props.items.map((item) => {
+    let items = this.props.items.map((item, i) => {
       let mark = item.link ?
-        <a href={item.link} target="_self">{item.text}</a> :
+        <Link {...item.link} >{item.text}</Link> :
         <span>{item.text}</span>
 
-      return (<li>{mark}</li>);
+      return (<li key={i}>{mark}</li>);
     });
     return (
       <ol className="breadcrumb">{items}</ol>

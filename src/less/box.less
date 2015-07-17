@@ -3,6 +3,12 @@
 
 .@{contentWrapperClass} {
   padding: 20px 10px 40px;
+
+  &:before, &:after {
+    content: '';
+    display: table;
+  }
+  &:after { clear: both; }
 }
 
 .@{iboxClass} {
