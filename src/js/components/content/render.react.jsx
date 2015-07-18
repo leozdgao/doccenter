@@ -4,6 +4,7 @@ import Modal, {showModal} from '../modal/modal.react';
 import IconText from '../toolkit/icontext.react';
 import {ajax, dateFormat, AutoIndexer} from '../../util';
 import Constant from '../../constant';
+import RenderActions from '../../actions/renderActions';
 
 let container;
 
@@ -15,14 +16,18 @@ export default React.createClass({
       content: ''
     };
   },
+  componentDidUpdate: function(prevProps, prevState) {
+    if(prevProps.content != this.props.content) {
+      RenderActions.generateIndex(this._articleDOMNode);
+      // this._generateIndex();
+    }
+  },
   componentDidMount () {
-    setTimeout(() => {
-      let article = React.findDOMNode(this.refs.article);
-      article.innerHTML = this.props.content;
-      let indexer = AutoIndexer.createIndexer({maxLevel: 4});
-      let index = indexer(article);
-      this.props.onIndexed(index);
-    }, 1000);
+    this._articleDOMNode = React.findDOMNode(this.refs.article);
+    this._indexer = AutoIndexer.createIndexer({maxLevel: 4});
+
+    // if(this.props.content) this._generateIndex();
+    if(this.props.content) RenderActions.generateIndex(this._articleDOMNode);
   },
   render () {
     let article = this.props.article;
@@ -60,7 +65,7 @@ export default React.createClass({
             ): null}
           </div>
         </div>
-        <div ref="article" className="ibox-content markdown"></div>
+        <div ref="article" className="ibox-content markdown" dangerouslySetInnerHTML={{__html: this.props.content}}></div>
         {/*<CommentBox />*/}
       </div>
     );
