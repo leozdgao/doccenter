@@ -18,7 +18,6 @@ export default React.createClass({
   },
   _getPageHeight () {
     if(this.isMounted()) {
-      let fluid = React.findDOMNode(this.refs.fluid);
       return document.documentElement.clientHeight;
     }
   }

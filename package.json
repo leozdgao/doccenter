@@ -6,9 +6,11 @@
     "github": "https://github.com/leozdgao/em-doccenter.git"
   },
   "scripts": {
-    "start": "gulp && node server/server",
-    "deploy": "gulp && pm2 start server/server.js --name doccenter",
-    "redeploy": "gulp && pm2 restart doccenter"
+    "build": "babel-node build.js",
+    "dev": "babel-node server/dev-run",
+    "start": "npm run build && NODE_ENV=production babel-node server/server",
+    "deploy": "npm run build && NODE_ENV=production pm2 start server/server.js --name doccenter",
+    "redeploy": "npm run build && NODE_ENV=production pm2 restart doccenter"
   },
   "author": "leozdgao",
   "license": "MIT",
@@ -23,33 +25,32 @@
     "lodash": "^3.10.0",
     "marked": "^0.3.3",
     "mongoose": "^4.0.6",
-    "normalize.css": "^3.0.3",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
     "reflux": "^0.2.8",
     "request": "^2.58.0"
   },
   "devDependencies": {
+    "babel": "^5.6.23",
     "babel-core": "^5.4.7",
     "babel-loader": "^5.1.3",
+    "child-process-promise": "^1.1.0",
+    "colors": "^1.1.2",
+    "css-loader": "^0.15.5",
     "extract-text-webpack-plugin": "^0.8.2",
-    "glob": "^5.0.10",
-    "gulp": "^3.8.10",
-    "gulp-autoprefixer": "^2.1.0",
-    "gulp-concat": "^2.4.3",
-    "gulp-connect": "^2.2.0",
-    "gulp-less": "^3.0.3",
-    "gulp-livereload": "^3.8.0",
-    "gulp-minify-css": "^0.4.2",
-    "gulp-nodemon": "^2.0.3",
-    "gulp-open": "^0.3.2",
-    "gulp-rename": "^1.2.0",
-    "gulp-sourcemaps": "^1.5.2",
-    "gulp-webpack": "^1.4.0",
+    "fs-extra": "^0.22.1",
+    "fs-promise": "^0.3.1",
+    "http-proxy": "^1.11.1",
+    "ip": "^0.3.3",
     "less": "^2.5.1",
     "less-loader": "^2.2.0",
     "node-libs-browser": "^0.5.2",
+    "nodemon": "^1.3.7",
+    "portfinder": "^0.4.0",
+    "react-hot-loader": "^1.2.8",
+    "style-loader": "^0.12.3",
     "webpack": "^1.9.10",
-    "webpack-dev-server": "^1.10.1"
+    "webpack-dev-server": "^1.10.1",
+    "yargs": "^3.15.0"
   }
 }

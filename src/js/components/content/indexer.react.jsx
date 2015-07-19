@@ -25,43 +25,10 @@ export default React.createClass({
     window.removeEventListener('scroll', this._handleScroll);
   },
   render () {
-    function construct(node) {
-      var children = null, subIndex = null;
-      if(node.hasChildren() && node.getDepth() != indexer.getMaxLevel()) {
-        children = node.children.map((n, i) => {
-          return (
-            <li key={i}>
-              <a target="_self" href={'#' + n.data.anchor}>{n.data.title}</a>
-              {construct(n)}
-            </li>
-          )
-        });
-        subIndex = (
-          <ul>{children}</ul>
-        );
-      }
-      return subIndex;
-    }
-    let indexerDOMNode = null;
-    if(this.state.content) {
-      let root = indexer.getNode(this.state.content);
-      let items = root.children.map((node, i) => {
-        return (
-          <li>
-            <a target="_self" href={'#' + node.data.anchor}>{node.data.title}</a>
-            {construct(node)}
-          </li>
-        );
-      });
-      indexerDOMNode = (
-        <ul>{items}</ul>
-      )
-    }
-
     return (
       <div ref="indexer" className="auto-index">
         <h3>Article Index</h3>
-        {indexerDOMNode}
+        {this.state.content ? this._construct(indexer.getNode(this.state.content)) : null}
       </div>
     );
   },
@@ -71,5 +38,21 @@ export default React.createClass({
   _getindexPosition () {
     if(window.scrollY < 100)  return 'absolute';
     else return 'fixed';
+  },
+  _construct (node) {
+    let children = null;
+    if(node.hasChildren() && node.getDepth() != indexer.getMaxLevel()) {
+      children = node.children.map((n, i) => {
+        return (
+          <li key={i}>
+            <a target="_self" href={'#' + n.data.anchor}>{n.data.title}</a>
+            {this._construct(n)}
+          </li>
+        )
+      });
+    }
+    return (
+      <ul>{children}</ul>
+    );
   }
 });

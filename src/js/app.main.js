@@ -9,6 +9,9 @@ import EditDoc from './components/EditDoc.react';
 import DocRender from './components/DocRender.react';
 import NotFound from './components/NotFound.react';
 
+// import stylesheet
+import '../less/site.less';
+
 import marked from 'marked';
 import highlight from 'highlight';
 
