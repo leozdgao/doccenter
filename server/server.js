@@ -8,9 +8,11 @@ import express from 'express';
 import httpProxy from 'http-proxy';
 import ip from 'ip';
 import path from 'path';
-import logger from '../util/logger';
+import pen from 'elecpen';
 import config from '../config';
 import 'colors';
+
+const logger = pen.createLogger(config.log);
 
 const development = process.env.NODE_ENV !== 'production';
 const port = process.env.PORT || 4000;
