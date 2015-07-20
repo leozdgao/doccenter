@@ -1,4 +1,5 @@
 import React from 'react';
+import Reflux from 'reflux';
 import {Link} from 'react-router';
 import {AutoIndexer} from '../../util';
 import RenderStore from '../../stores/renderStore';
@@ -6,6 +7,7 @@ import RenderStore from '../../stores/renderStore';
 let indexer = AutoIndexer.createIndexer({maxLevel: 4});
 
 export default React.createClass({
+  mixins: [Reflux.ListenerMixin],
   getInitialState: function() {
     return {
       content: null
@@ -17,7 +19,7 @@ export default React.createClass({
     this._handleScroll();
     window.addEventListener('scroll', this._handleScroll);
 
-    RenderStore.listen((content) => {
+    this.listenTo(RenderStore, (content) => {
       this.setState({content: content});
     });
   },

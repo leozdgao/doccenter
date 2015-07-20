@@ -1,4 +1,5 @@
 import React from 'react';
+import Reflux from 'reflux';
 import docActions from '../actions/docActions';
 import docStore from '../stores/docStore';
 import PageHeaderActions from '../actions/pageheaderActions';
@@ -8,6 +9,7 @@ import Fluid from './toolkit/fluid.react';
 import {isInteger, isDefined, ensure} from '../util';
 
 export default React.createClass({
+  mixins: [Reflux.ListenerMixin],
   statics: {
     willTransitionTo (transition, params, query) {
       let page = query.p;
@@ -37,7 +39,7 @@ export default React.createClass({
   componentDidMount () {
     docActions.page(this.state.page, this.state.conditions); // trigger action
     docActions.tags();
-    docStore.listen((ret) => {
+    this.listenTo(docStore, (ret) => {
       if(!ret.fail) {
         let {count, tags, list} = ret;
         this.setState(ensure({
@@ -61,12 +63,8 @@ export default React.createClass({
   render () {
     return (
       <div className="wrapper-content">
-        <div className="col-md-11">
-          <List docs={this.state.list} page={this.state.page} sum={this.state.pageSum} loadFail={this.state.pageFail} loading={this.state.pageLoading} />
-        </div>
-        <div className="col-md-5">
-          <TagPanel tags={this.state.tags} loadFail={this.state.tagFail} />
-        </div>
+        <TagPanel tags={this.state.tags} loadFail={this.state.tagFail} />
+        <List searchString={this.props.query.s} docs={this.state.list} page={this.state.page} sum={this.state.pageSum} loadFail={this.state.pageFail} loading={this.state.pageLoading} />
       </div>
     );
   },

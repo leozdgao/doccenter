@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import cNames from 'classnames';
 import Pagination from './pagination.react';
 import SearchBox from './searchbox.react';
+import IconText from '../toolkit/icontext.react';
 import {dateFormat} from '../../util';
 
 export default React.createClass({
@@ -33,11 +34,11 @@ export default React.createClass({
       );
     }
     else {
-      var slips =
+      let slips =
         this.props.docs.map((d, i) => {
           return (
             <div key={i} className="slip">
-              <h2 className="slip-title"><Link to="doc" params={{id: d._id}}>{d.title}</Link></h2>
+              <h3 className="slip-title"><Link to="doc" params={{id: d._id}}>{d.title}</Link></h3>
               <div>
                 <span className="help-text">CreateBy: {d.author || '?'}</span>
                 <span className="help-text">Date: {dateFormat(d.date)}</span>
@@ -49,10 +50,24 @@ export default React.createClass({
 
       if(slips.length == 0) slips = (<span className="help-text">No documents now...</span>);
 
+      const prompt = (
+        <div>
+          <h3 style={{display: 'inline-block', marginRight: 10}}>{`Search result for "${this.props.searchString}"`}</h3>
+          <Link activeClassName="" className="btn btn-default btn-xs" to="docs">Clear</Link>
+        </div>
+      )
+
       return (
         <div className="doclist ibox">
+          <div className="ibox-title">
+            <Link className="btn btn-success btn-xs pull-right" to="newdoc">
+              <IconText className="icon-text" iconClassName="fa fa-pencil">New article</IconText>
+            </Link>
+            <h4>Professional Service Documents</h4>
+          </div>
           <div className="ibox-content">
             <SearchBox />
+            {this.props.searchString ? prompt: null}
             {slips}
             <Pagination page={this.props.page} sum={this.props.sum} />
           </div>

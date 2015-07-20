@@ -1,4 +1,5 @@
 import React from 'react';
+import Reflux from 'reflux';
 import marked from 'marked';
 import {isEmptyString} from '../util';
 import docActions from '../actions/docActions';
@@ -23,6 +24,7 @@ export default React.createClass({
       ]});
     },
   },
+  mixins: [Reflux.ListenerMixin],
   getInitialState () {
     return {
       loading: true,
@@ -39,7 +41,7 @@ export default React.createClass({
   componentDidMount () {
     let id = this.props.params.id;
     docActions.docLoad(id); // action trigger
-    docStore.listen((res) => {
+    this.listenTo(docStore, (res) => {
       if(isEmptyString(res) || res == null) {
         this.setState({badload: true, loading: false});
       }

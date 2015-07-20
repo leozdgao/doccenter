@@ -19,10 +19,6 @@ export default React.createClass({
         <Link className="sidebar-btn icon-text" to="docs">
           <IconText className="icon-text" iconClassName="fa fa-file-text-o" text="Documents" />
         </Link>
-        <span className="sidebar-spliter"></span>
-        <Link className="sidebar-btn icon-text" to="newdoc">
-          <IconText className="icon-text" iconClassName="fa fa-pencil" text="Write" />
-        </Link>
       </nav>
     );
   }

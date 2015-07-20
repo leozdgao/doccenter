@@ -1,4 +1,5 @@
 import React from 'react';
+import Reflux from 'reflux';
 import {RouteHandler} from 'react-router';
 import PageHeaderStore from '../stores/pageheaderStore';
 import PageHeader from './scaffold/pageheader.react';
@@ -6,9 +7,10 @@ import Sidebar from './scaffold/sidebar.react';
 import Fluid from './toolkit/fluid.react';
 
 export default React.createClass({
+  mixins: [Reflux.ListenerMixin],
   componentDidMount () {
     // listen to store and change page header
-    PageHeaderStore.listen((ret) => {
+    this.listenTo(PageHeaderStore, (ret) => {
       this.setState(ret);
     });
   },

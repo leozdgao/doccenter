@@ -1,4 +1,5 @@
 import React from 'react';
+import Reflux from 'reflux';
 import {showModal} from './modal/modal.react';
 import TagInput from './editor/taginput.react';
 import Editor from './editor/editor.react';
@@ -11,7 +12,7 @@ import { isEmptyString, isDefined, isString, ajax } from '../util';
 import Constant from '../constant';
 
 export default React.createClass({
-  mixins: [Navigation],
+  mixins: [Navigation, Reflux.ListenerMixin],
   statics: {
     willTransitionFrom (transition, component, callback) {
       if(/\/doc\/\w+/.test(transition.path)) callback();
@@ -53,7 +54,7 @@ export default React.createClass({
   componentDidMount () {
     let id = this.props.params.id;
     docActions.getOneDoc(id);
-    docStore.listen((res) => {
+    this.listenTo(docStore, (res) => {
       if(res.submitted) {
         this.transitionTo('doc', {id: res.article._id});
       }

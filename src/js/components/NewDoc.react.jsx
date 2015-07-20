@@ -7,10 +7,17 @@ import ButtonGroup from './editor/buttongroup.react';
 import { isEmptyString, isDefined, isString, ajax } from '../util';
 import Modal, {showModal} from './modal/modal.react';
 import Constant from '../constant';
+import PageHeaderActions from '../actions/pageheaderActions';
 
 export default React.createClass({
-  mixins: [Navigation],
   statics: {
+    willTransitionTo (transition, params, query) {
+      PageHeaderActions.change({breadcrumbs: [
+        { text: 'Home', link: { to: 'overview' } },
+        { text: 'Documents', link: {to: 'docs'} },
+        { text: 'New article' }
+      ]});
+    },
     willTransitionFrom (transition, component, callback) {
       if(/\/doc\/\w+/.test(transition.path)) callback();
       else {
@@ -31,6 +38,7 @@ export default React.createClass({
       }
     }
   },
+  mixins: [Navigation],
   getInitialState () {
     return {
       title: '',

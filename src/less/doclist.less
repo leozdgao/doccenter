@@ -1,25 +1,60 @@
+.doclist {
+  padding: 0 15px;
+  margin-right: @tagPanelWidth;
+}
+
+.tagpanel {
+  width: @tagPanelWidth;
+  padding: 0 15px;
+  float: right;
+
+  .tag { margin-bottom: 5px; }
+}
+
 .searchbox {
   position: relative;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 
   input {
-    border-radius: 10px;
-    padding-left: 35px;
+    display: block;
+    width: 100%;
+    border-style: none;
+    padding: 10px 10px 10px 24px;
+    border-bottom: 2px solid @border_color;
+
+    &:focus~.strip {
+      width: 100%;
+    }
   }
 
   i {
     position: absolute;
-    left: 12px;
-    top: 8px;
+    top: 12px;
+    left: 4px;
+  }
+
+  .strip {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: all .3s;
+    width: 0;
+    height: 2px;
+    background-color: steelblue;
   }
 }
 
 .slip {
-  padding: 0 10px 10px;
+  padding: 10px;
   border-bottom: 1px solid @border_color;
 
   .help-text {
     margin-right: 15px;
+  }
+
+  &:hover {
+    background-color: #f5f5f5;
   }
 }
 .slip-title {
@@ -31,10 +66,6 @@
       color: @color;
     }
   }
-}
-
-.tagpanel .tag {
-  margin-bottom: 5px;
 }
 
 .pagination {
