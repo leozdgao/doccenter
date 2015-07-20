@@ -55,7 +55,7 @@ export default React.createClass({
       // fail to load data
       else {
         if(ret.fail == 'page') this.setState({ pageFail: true, pageLoading: false });
-        else if(ret.fail == 'tag') this.setState({ tagFail: true, pageLoading: false })
+        else if(ret.fail == 'tag') this.setState({ tagFail: true, pageLoading: false });
       }
     });
   },

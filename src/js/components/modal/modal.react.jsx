@@ -95,15 +95,15 @@ var Modal = React.createClass({
         return (
           <div className="modal-footer">
             <span className="help-text err">{this.state.message}</span>
-            <button className="btn primary" onClick={this._onConfirm}>Confirm</button>
+            <button className="btn btn-primary btn-sm" onClick={this._onConfirm}>Confirm</button>
           </div>
         );
       case 'confirm':
         return (
           <div className="modal-footer">
             <span className="help-text err">{this.state.message}</span>
-            <button className="btn sm primary" onClick={this._onConfirm}>Confirm</button>
-            <button className="btn sm default" onClick={this._onCancel}>Cancel</button>
+            <button className="btn btn-primary btn-sm" onClick={this._onConfirm}>Confirm</button>
+            <button className="btn btn-default btn-sm" onClick={this._onCancel}>Cancel</button>
           </div>
         );
       default: return null;

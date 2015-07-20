@@ -54,15 +54,21 @@ export default React.createClass({
   },
   render () {
     return (
-      <div id="editor">
-        <form>
-          <h2 className="icon-text"><i className="fa fa-file-text-o"></i> Write Document</h2>
-          <TitleInput title={this.state.title} refreshState={this._refreshState('title')} validate={this.state.validation.title} />
-          <TagInput tags={this.state.tags} refreshState={this._refreshState('tags')} />
-          <Editor ref="editor" content={this.state.content} refreshState={this._refreshState('content')} validate={this.state.validation.content}
-            fileUploadUrl={Constant.FILEUPLOADURL} refreshAttachment={this._refreshState('attachments')} />
-          <ButtonGroup submit={this._submit} message={this.state.message} />
-        </form>
+      <div id="editor" className="wrapper-content">
+        <div className="ibox">
+          <div className="ibox-title">
+            <h4>Write a new article</h4>
+          </div>
+          <div className="ibox-content">
+            <form>
+              <TitleInput title={this.state.title} refreshState={this._refreshState('title')} validate={this.state.validation.title} />
+              <TagInput tags={this.state.tags} refreshState={this._refreshState('tags')} />
+              <Editor ref="editor" content={this.state.content} refreshState={this._refreshState('content')} validate={this.state.validation.content}
+                fileUploadUrl={Constant.FILEUPLOADURL} refreshAttachment={this._refreshState('attachments')} />
+              <ButtonGroup submit={this._submit} message={this.state.message} />
+            </form>
+          </div>
+        </div>
       </div>
     );
   },
