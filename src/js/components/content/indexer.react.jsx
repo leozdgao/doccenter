@@ -45,7 +45,7 @@ export default React.createClass({
       children = node.children.map((n, i) => {
         return (
           <li key={i}>
-            <a target="_self" href={'#' + n.data.anchor}>{n.data.title}</a>
+            <a target="_self" href={`${location.pathname}#${n.data.anchor}`}>{n.data.title}</a>
             {this._construct(n)}
           </li>
         )

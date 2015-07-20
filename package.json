@@ -9,7 +9,7 @@
     "build": "babel-node build.js",
     "dev": "babel-node server/dev-run",
     "start": "npm run build && NODE_ENV=production babel-node server/server",
-    "deploy": "npm run build && NODE_ENV=production pm2 start server/server.js --name doccenter",
+    "deploy": "npm run build && NODE_ENV=production pm2 start server/server.js --name doccenter --next-gen-js",
     "redeploy": "npm run build && NODE_ENV=production pm2 restart doccenter"
   },
   "author": "leozdgao",

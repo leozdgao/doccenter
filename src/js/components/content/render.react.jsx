@@ -2,7 +2,7 @@ import React from 'react';
 import {Link, Navigation} from 'react-router';
 import Modal, {showModal} from '../modal/modal.react';
 import IconText from '../toolkit/icontext.react';
-import {ajax, dateFormat, AutoIndexer} from '../../util';
+import {ajax, dateFormat} from '../../util';
 import Constant from '../../constant';
 import RenderActions from '../../actions/renderActions';
 
@@ -19,14 +19,11 @@ export default React.createClass({
   componentDidUpdate: function(prevProps, prevState) {
     if(prevProps.content != this.props.content) {
       RenderActions.generateIndex(this._articleDOMNode);
-      // this._generateIndex();
     }
   },
   componentDidMount () {
     this._articleDOMNode = React.findDOMNode(this.refs.article);
-    this._indexer = AutoIndexer.createIndexer({maxLevel: 4});
 
-    // if(this.props.content) this._generateIndex();
     if(this.props.content) RenderActions.generateIndex(this._articleDOMNode);
   },
   render () {

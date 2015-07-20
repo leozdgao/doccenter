@@ -10,7 +10,7 @@ import PageHeaderActions from '../actions/pageheaderActions';
 let renderer = new marked.Renderer(), seed = 0;
 renderer.heading = function (text, level) {
   let id = 'header' + (seed ++);
-  return '<h' + level + ' id="'+ id +'">' + text + '</h' + level + '>';
+  return `<h${level} id="${id}">${text}</h${level}>`;
 };
 
 export default React.createClass({
@@ -45,6 +45,12 @@ export default React.createClass({
       }
       else {
         this.setState({article: res, loading: false});
+        // set breadcrumbs if cache is empty
+        PageHeaderActions.change({breadcrumbs: [
+          { text: 'Home', link: { to: 'overview' } },
+          { text: 'Documents', link: {to: 'docs'} },
+          { text: res.title }
+        ]});
       }
     });
   },
@@ -54,7 +60,7 @@ export default React.createClass({
       let content = marked(this.state.article.content, { renderer: renderer });
       return (
         <div className="wrapper-content article-content">
-          <AutoIndex></AutoIndex>
+          <AutoIndex />
           <Render article={this.state.article} content={content} />
         </div>
       );
