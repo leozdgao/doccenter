@@ -34,11 +34,10 @@ let routes = (
       <Route name="doc" path="/doc/:id" handler={DocRender} />
       <Route path="" handler={DocList} />
       <Route name="newdoc" path="newdoc" handler={NewDoc} />
+      <Route name="edit" path="/edit/:id" handler={EditDoc} />
     </Route>
     {/*<Route name="slides" path="slides" handler={} />*/}
     {/*<Route name="archives" path="archives" handler={} />*/}
-
-    <Route name="edit" path="/edit/:id" handler={EditDoc} />
     <NotFoundRoute handler={NotFound} />
   </Route>
 );

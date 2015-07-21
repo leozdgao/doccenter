@@ -4,6 +4,7 @@ import TagInput from './editor/taginput.react';
 import Editor from './editor/editor.react';
 import TitleInput from './editor/title.react';
 import ButtonGroup from './editor/buttongroup.react';
+import TopMost from './editor/topmost.react';
 import { isEmptyString, isDefined, isString, ajax } from '../util';
 import Modal, {showModal} from './modal/modal.react';
 import Constant from '../constant';
@@ -19,8 +20,7 @@ export default React.createClass({
       ]});
     },
     willTransitionFrom (transition, component, callback) {
-      if(/\/doc\/\w+/.test(transition.path)) callback();
-      else {
+      if(component._dirty){
         let content = (<div>Cancel editing?</div>);
         showModal(content, {
           width: 400,
@@ -36,6 +36,7 @@ export default React.createClass({
           }
         });
       }
+      else callback();
     }
   },
   mixins: [Navigation],
@@ -45,6 +46,7 @@ export default React.createClass({
       tags: [],
       content: '',
       attachments: [],
+      priority: 0,
       message: '',
       validation: {
         title: true,
@@ -65,6 +67,7 @@ export default React.createClass({
               <TagInput tags={this.state.tags} refreshState={this._refreshState('tags')} />
               <Editor ref="editor" content={this.state.content} refreshState={this._refreshState('content')} validate={this.state.validation.content}
                 fileUploadUrl={Constant.FILEUPLOADURL} refreshAttachment={this._refreshState('attachments')} />
+              <TopMost checked={this.state.priority > 0} refreshState={this._refreshState('priority')} />
               <ButtonGroup submit={this._submit} message={this.state.message} />
             </form>
           </div>
@@ -74,7 +77,10 @@ export default React.createClass({
   },
   // recieve an article id
   _afterPost (id) {
-    if(id) this.transitionTo('doc', {id: id});
+    if(id) {
+      this._dirty = false;
+      this.transitionTo('doc', {id: id});
+    }
   },
   _submit (e) {
     e.preventDefault();
@@ -134,6 +140,8 @@ export default React.createClass({
   },
   _refreshState (key) {
     return (val) => {
+      this._dirty = true;
+
       let temp = {};
       temp[key] = val;
       this.setState(temp);
@@ -157,5 +165,9 @@ export default React.createClass({
   },
   _setErrMsg (msg) {
     this.setState({message: msg});
+  },
+  _handleTopmost () {
+    let topmost = React.findDOMNode(this.refs.topmost);
+    this.setState({priority: Number(topmost.checked)})
   }
 });

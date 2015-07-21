@@ -1,6 +1,6 @@
 #editor {
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
   width: 100%;
 
   h2.icon-text {
@@ -42,15 +42,10 @@
 }
 
 /* Style for Tag Input */
-.tag {
-  display: inline-block;
-  padding: 3px 8px;
-  margin-right: 5px;
+.tag:extend(.label) {
   color: @tagcolor;
   background-color: @tagbkg;
-  border-radius: 3px;
-  font-size: .8em;
-  font-weight: 300;
+  padding: 3px 8px;
 }
 .tag-input {
   position: relative;
@@ -61,7 +56,7 @@
   input {
     display: inline-block;
     width: auto;
-    
+
     &:focus { outline: 0 }
   }
 
@@ -88,6 +83,7 @@
     bottom: 0;
     left: 0;
     right: 0;
+    margin: 0;
 
     .md-editor {
       height: 100%;
@@ -246,7 +242,7 @@
   box-shadow: 0 1px 5px #ccc;
   background-clip: padding-box;
   border: 1px solid #ccc;
-  // font-size: .8em;
+  font-size: .8em;
 
   .file-add {
     display: block;
@@ -283,6 +279,7 @@
     width: 140px;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
     vertical-align: middle;
     cursor: default;
   }
@@ -304,3 +301,5 @@
   width: 5px;
   height: 100%;
 }
+
+.checkbox { margin-top: 10px; }

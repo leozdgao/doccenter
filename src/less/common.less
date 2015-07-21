@@ -40,7 +40,7 @@
 
   // invalid clean text
   &.invalid {
-    border-bottom-color: #c0392b;
+    border-bottom-color: @errorColor;
   }
 }
 
@@ -127,3 +127,26 @@
 .text-thin { font-weight: 200; }
 .text-lg { font-size: 1.2em; }
 .text-xs { font-size: .8em; }
+
+.label {
+  display: inline-block;
+  padding: 2px 6px;
+  margin-right: 5px;
+  border-radius: 3px;
+  font-size: .8em;
+  font-weight: 300;
+  color: #fff;
+  vertical-align: middle;
+}
+
+.checkbox {
+  label {
+     cursor: pointer;
+  }
+  input[type="checkbox"] {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+  span { vertical-align: middle; }
+}

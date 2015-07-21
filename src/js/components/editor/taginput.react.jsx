@@ -14,7 +14,9 @@ export default React.createClass({
 
     return (
       <div className="cleanText tag-input" onClick={this._click}>
-        {tags}
+        <div style={{marginLeft: 10, display: 'inline-block'}}>
+          {tags}
+        </div>
         <input type="text" ref="input" onKeyDown={this._keyDown} onKeyUp={this._keyUp} onBlur={this._blur} placeholder="Tag, like: JavaScript" />
         <span className="hidden" ref="hidden"></span>
         <div className="strip"></div>

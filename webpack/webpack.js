@@ -36,8 +36,8 @@ export default _.extend({}, baseConfig, {
   module: {
     loaders: [
       { test: /\.jsx?$/, loader: `${reactHot}${jsLoader}`, exclude: /node_modules/ },
-      { test: /\.css/, loader: ExtractTextPlugin.extract('style', `css${cssSourceMap}`) },
-      { test: /\.less$/, loader: ExtractTextPlugin.extract('style', `css${cssSourceMap}!less${cssSourceMap}`) }
+      { test: /\.css/, loader: ExtractTextPlugin.extract('style', `css${cssSourceMap}!autoprefixer?browsers=last 2 versions`) },
+      { test: /\.less$/, loader: ExtractTextPlugin.extract('style', `css${cssSourceMap}!autoprefixer?browsers=last 2 versions!less${cssSourceMap}`) }
     ]
   }
 });

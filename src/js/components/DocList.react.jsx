@@ -64,7 +64,7 @@ export default React.createClass({
     return (
       <div className="wrapper-content">
         <TagPanel tags={this.state.tags} loadFail={this.state.tagFail} />
-        <List searchString={this.props.query.s} docs={this.state.list} page={this.state.page} sum={this.state.pageSum} loadFail={this.state.pageFail} loading={this.state.pageLoading} />
+        <List searchString={this.props.query.s} tagString={this.props.query.t} docs={this.state.list} page={this.state.page} sum={this.state.pageSum} loadFail={this.state.pageFail} loading={this.state.pageLoading} />
       </div>
     );
   },

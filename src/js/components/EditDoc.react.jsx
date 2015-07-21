@@ -5,18 +5,26 @@ import TagInput from './editor/taginput.react';
 import Editor from './editor/editor.react';
 import TitleInput from './editor/title.react';
 import ButtonGroup from './editor/buttongroup.react';
+import TopMost from './editor/topmost.react';
 import docActions from '../actions/docActions';
 import docStore from '../stores/docStore';
 import { Navigation } from 'react-router';
 import { isEmptyString, isDefined, isString, ajax } from '../util';
 import Constant from '../constant';
+import PageHeaderActions from '../actions/pageheaderActions';
 
 export default React.createClass({
   mixins: [Navigation, Reflux.ListenerMixin],
   statics: {
+    willTransitionTo (transition, params, query) {
+      PageHeaderActions.change({breadcrumbs: [
+        { text: 'Home', link: { to: 'overview' } },
+        { text: 'Documents', link: {to: 'docs'} },
+        { text: 'Edit article' }
+      ]});
+    },
     willTransitionFrom (transition, component, callback) {
-      if(/\/doc\/\w+/.test(transition.path)) callback();
-      else {
+      if(component._dirty) {
         let content = (<div>Cancel editing?</div>);
         showModal(content, {
           width: 400,
@@ -32,6 +40,7 @@ export default React.createClass({
           }
         });
       }
+      else callback();
     }
   },
   getInitialState () {
@@ -56,6 +65,7 @@ export default React.createClass({
     docActions.getOneDoc(id);
     this.listenTo(docStore, (res) => {
       if(res.submitted) {
+        this._dirty = false;
         this.transitionTo('doc', {id: res.article._id});
       }
       else {
@@ -65,20 +75,27 @@ export default React.createClass({
   },
   render () {
     let content = this.state.loaded ? (
-        <form>
-          <h2 className="icon-text"><i className="fa fa-file-text-o"></i> Edit Document</h2>
-          <TitleInput title={this.state.article.title} refreshState={this._refreshState('title')} validate={this.state.validation.title} />
-          <TagInput tags={this.state.article.tags} refreshState={this._refreshState('tags')} />
-          <Editor ref="editor" content={this.state.article.content} refreshState={this._refreshState('content')} validate={this.state.validation.content}
-            fileUploadUrl={Constant.FILEUPLOADURL} refreshAttachment={this._refreshState('attachments')} attachments={this.state.article.attachments}
-            afterRemoveAttachment={this._afterRemoveAttachment} afterAddAttachment={this._afterAddAttachment} />
-          <ButtonGroup submit={this._submit} message={this.state.message} enable={this.state.btnEnable} />
-        </form>
+        <div className="ibox">
+          <div className="ibox-title">
+            <h4>Edit article</h4>
+          </div>
+          <div className="ibox-content">
+            <form>
+              <TitleInput title={this.state.article.title} refreshState={this._refreshState('title')} validate={this.state.validation.title} />
+              <TagInput tags={this.state.article.tags} refreshState={this._refreshState('tags')} />
+              <Editor ref="editor" content={this.state.article.content} refreshState={this._refreshState('content')} validate={this.state.validation.content}
+                fileUploadUrl={Constant.FILEUPLOADURL} refreshAttachment={this._refreshState('attachments')} attachments={this.state.article.attachments}
+                afterRemoveAttachment={this._afterRemoveAttachment} afterAddAttachment={this._afterAddAttachment} />
+              <TopMost checked={this.state.article.priority > 0} refreshState={this._refreshState('priority')} />
+              <ButtonGroup submit={this._submit} message={this.state.message} enable={this.state.btnEnable} />
+            </form>
+          </div>
+        </div>
       ) : (
         <div>{this.state.message}</div>
       );
     return (
-      <div id="editor">
+      <div id="editor" className="wrapper-content">
         {content}
       </div>
     );
@@ -117,6 +134,7 @@ export default React.createClass({
   },
   _refreshState (key) {
     return (val) => {
+      this._dirty = true;
       let article = this.state.article;
       article[key] = val;
       this.setState({article: article});
