@@ -9,7 +9,7 @@
 }
 
 .editor-title {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .editor-title .textbox,
@@ -19,10 +19,10 @@
   line-height: @content_lineHeight;
 }
 
-.editor-title.invalid, .invalid .textbox {
-  border-color: @invalidColor;
-  box-shadow: 0 0 2px @invalidColor;
-}
+// .editor-title.invalid, .invalid .textbox {
+//   border-color: @invalidColor;
+//   box-shadow: 0 0 2px @invalidColor;
+// }
 
 /* Badge */
 .badge {
@@ -49,7 +49,7 @@
   color: @tagcolor;
   background-color: @tagbkg;
   border-radius: 3px;
-  // font-size: .8em;
+  font-size: .8em;
   font-weight: 300;
 }
 .tag-input {
@@ -59,11 +59,9 @@
   background-color: #fff;
 
   input {
-    border: none;
-    padding: 2px 0;
-    margin-left: 3px;
-    // font-size: .8em;
-
+    display: inline-block;
+    width: auto;
+    
     &:focus { outline: 0 }
   }
 
@@ -78,6 +76,7 @@
 .md-panel {
   display: block;
   position: relative;
+  margin-top: 40px;
   border: 1px solid #ccc;
   border-radius: 3px;
   font-size: 14px;

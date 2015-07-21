@@ -12,6 +12,38 @@
   }
 }
 
+.cleanText {
+  position: relative;
+  border-bottom: 2px solid @border_color;
+
+  input {
+    display: block;
+    width: 100%;
+    border-style: none;
+    padding: 10px;
+
+    &:focus~.strip {
+      width: 100%;
+    }
+  }
+
+  .strip {
+    display: block;
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    transition: all .3s;
+    width: 0;
+    height: 2px;
+    background-color: steelblue;
+  }
+
+  // invalid clean text
+  &.invalid {
+    border-bottom-color: #c0392b;
+  }
+}
+
 .clearfix {
   &:before, &:after {
     display: table;

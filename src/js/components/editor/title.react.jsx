@@ -1,17 +1,20 @@
 import React from 'react';
+import cName from 'classnames';
 
 export default React.createClass({
-  getDefaultProps: function() {
+  getDefaultProps () {
     return {
       validate: true
     };
   },
   render () {
+    let className = cName(['editor-title', 'cleanText', {'invalid': !this.props.validate}]);
     return (
-      <div className={this.props.validate ? "editor-title": "editor-title invalid"}>
-        <input className="textbox" name="title" ref="title" type="text"
+      <div className={className}>
+        <input name="title" ref="title" type="text"
           value={this.props.title} onChange={this._onChange}
           placeholder="Give it a headline" />
+        <div className="strip"></div>
       </div>
     );
   },

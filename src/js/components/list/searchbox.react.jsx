@@ -10,7 +10,7 @@ export default React.createClass({
   },
   render () {
     return (
-      <div className="searchbox">
+      <div className="searchbox cleanText">
         <input ref="text" type="text" placeholder="Search..." onKeyDown={this._handleKeyDown} />
         <i className="fa fa-search"></i>
         <div className="strip"></div>
