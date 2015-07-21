@@ -30,7 +30,7 @@ if(development) {
   var target = "http://" + ip.address() + ":" + webpackPort;
 
   app.get('/assets/*', function (req, res) {
-    proxy.web(req, res, { target });
+    proxy.web(req, res, { target: target });
   });
 
   proxy.on('error', function(e) {
