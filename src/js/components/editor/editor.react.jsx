@@ -3,9 +3,12 @@ import marked from 'marked';
 import Uploader from './uploader.react';
 
 let renderer = new marked.Renderer(), seed = 0;
-renderer.heading = function (text, level) {
+renderer.heading = (text, level) => {
   let id = 'header' + (seed ++);
   return '<h' + level + ' id="'+ id +'">' + text + '</h' + level + '>';
+};
+renderer.html = (html) => {
+  return html.replace(/<t(able|h|d|r) (\w*)>/g, '<t$1>');
 };
 
 export default React.createClass({
