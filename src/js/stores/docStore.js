@@ -68,8 +68,9 @@ export default Reflux.createStore({
       });
   },
   onDocUpdate (id, body) {
+    let {_id, ...update} = body; console.log(body); console.log(update);
     // put
-    ajax.put('/service/article/' + id, body)
+    ajax.put('/service/article/' + id, update)
       .then((res) => {
         this.trigger({article: res, submitted: true});
       })
