@@ -8,7 +8,7 @@ renderer.heading = (text, level) => {
   return '<h' + level + ' id="'+ id +'">' + text + '</h' + level + '>';
 };
 renderer.html = (html) => {
-  return html.replace(/<t(able|h|d|r) (\w*)>/g, '<t$1>');
+  return html.replace(/<t(able|h|d|r) (.*)>/g, '<t$1>');
 };
 
 export default React.createClass({
