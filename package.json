@@ -25,6 +25,7 @@
     "lodash": "^3.10.0",
     "marked": "^0.3.3",
     "mongoose": "^4.0.6",
+    "promise-polyfill": "^2.1.0",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
     "reflux": "^0.2.8",

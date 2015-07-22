@@ -1,3 +1,5 @@
+import Promise from 'promise-polyfill';
+
 export function isEmptyString(val) {
   return /^[ ]*$/.test(val);
 }
