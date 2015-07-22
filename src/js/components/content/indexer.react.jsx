@@ -38,7 +38,7 @@ export default React.createClass({
     this._indexerDOMNode.style.position = this._getindexPosition();
   },
   _getindexPosition () {
-    if(window.scrollY || window.pageYOffset < 100)  return 'absolute';
+    if((window.scrollY || window.pageYOffset) < 100)  return 'absolute';
     else return 'fixed';
   },
   _construct (node) {
