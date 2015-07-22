@@ -1,18 +1,12 @@
 import React from 'react';
 import Reflux from 'reflux';
-import marked from 'marked';
 import {isEmptyString} from '../util';
 import docActions from '../actions/docActions';
 import docStore, {cache} from '../stores/docStore';
 import Render from './content/render.react';
 import AutoIndex from './content/indexer.react';
 import PageHeaderActions from '../actions/pageheaderActions';
-
-let renderer = new marked.Renderer(), seed = 0;
-renderer.heading = function (text, level) {
-  let id = 'header' + (seed ++);
-  return `<h${level} id="${id}">${text}</h${level}>`;
-};
+import MDParser from '../mixins/markdownParser';
 
 export default React.createClass({
   statics: {
@@ -24,7 +18,7 @@ export default React.createClass({
       ]});
     },
   },
-  mixins: [Reflux.ListenerMixin],
+  mixins: [Reflux.ListenerMixin, MDParser],
   getInitialState () {
     return {
       loading: true,
@@ -58,8 +52,7 @@ export default React.createClass({
   },
   render () {
     if(!this.state.badload) {
-      seed = 0; // reset seed
-      let content = marked(this.state.article.content, { renderer: renderer });
+      let content = this.mdParse(this.state.article.content);
       return (
         <div className="wrapper-content article-content">
           <AutoIndex />

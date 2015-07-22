@@ -1,17 +1,9 @@
 import React from 'react';
-import marked from 'marked';
 import Uploader from './uploader.react';
-
-let renderer = new marked.Renderer(), seed = 0;
-renderer.heading = (text, level) => {
-  let id = 'header' + (seed ++);
-  return '<h' + level + ' id="'+ id +'">' + text + '</h' + level + '>';
-};
-renderer.html = (html) => {
-  return html.replace(/<t(able|h|d|r) (.*)>/g, '<t$1>');
-};
+import MDParser from '../../mixins/markdownParser';
 
 export default React.createClass({
+  mixins: [MDParser],
   getDefaultProps () {
     return {
       validate: true
@@ -36,7 +28,6 @@ export default React.createClass({
     this.resizer = React.findDOMNode(this.refs.resizer);
   },
   render () {
-    seed = 0; // set seed to 0 everytime render an article
     return (
       <div className={this.state.panelClass}>
         <div className="md-menubar">
@@ -79,7 +70,7 @@ export default React.createClass({
         <div className={this.state.modeControlStyle["pEditor"]}>
           <textarea ref="editor" name="content" value={this.props.content} onChange={this._onChange}></textarea>{/*style={{height: this.state.editorHeight + 'px'}}*/}
         </div>
-        <div className={this.state.modeControlStyle["pPreview"]} ref="preview" dangerouslySetInnerHTML={{__html: marked(this.props.content, { renderer: renderer })}}></div>
+        <div className={this.state.modeControlStyle["pPreview"]} ref="preview" dangerouslySetInnerHTML={{__html: this.mdParse(this.props.content)}}></div>
         <div className="md-spliter"></div>
       </div>
     );
