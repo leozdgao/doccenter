@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, State} from 'react-router';
-import {copy} from '../../util';
+import {copy} from '../../utils/helps';
 
 // page, sum , pageChange
 

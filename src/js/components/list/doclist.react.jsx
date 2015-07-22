@@ -4,7 +4,7 @@ import cNames from 'classnames';
 import Pagination from './pagination.react';
 import SearchBox from './searchbox.react';
 import IconText from '../toolkit/icontext.react';
-import {dateFormat} from '../../util';
+import {dateFormat} from '../../utils/helps';
 
 export default React.createClass({
   getDefaultProps: function() {
@@ -14,21 +14,20 @@ export default React.createClass({
     };
   },
   render () {
+    let content = null;
     if(this.props.loading) {
 
       //[TODO] improve it with animation
 
-      return (
-        <div className="doclist">
-          <SearchBox />
+      content = (
+        <div className="ibox-content">
           <span className="help-text">loading...</span>
         </div>
       );
     }
     else if(this.props.loadFail) {
-      return (
-        <div className="doclist">
-          <SearchBox />
+      content = (
+        <div className="ibox-content">
           <span className="help-text">Can't fetch data from server.</span>
         </div>
       );
@@ -62,24 +61,28 @@ export default React.createClass({
           </h3>
           <Link activeClassName="" className="btn btn-default btn-xs" to="docs">Clear</Link>
         </div>
-      )
+      );
 
-      return (
-        <div className="doclist ibox">
-          <div className="ibox-title">
-            <Link className="btn btn-success btn-xs pull-right" to="newdoc">
-              <IconText className="icon-text" iconClassName="fa fa-pencil">New article</IconText>
-            </Link>
-            <h4>Professional Service Documents</h4>
-          </div>
-          <div className="ibox-content">
-            <SearchBox />
-            {this.props.searchString || this.props.tagString ? prompt: null}
-            {slips}
-            <Pagination page={this.props.page} sum={this.props.sum} />
-          </div>
+      content = (
+        <div className="ibox-content">
+          <SearchBox />
+          {this.props.searchString || this.props.tagString ? prompt: null}
+          {slips}
+          <Pagination page={this.props.page} sum={this.props.sum} />
         </div>
       );
     }
+
+    return (
+      <div className="doclist ibox">
+        <div className="ibox-title">
+          <Link className="btn btn-success btn-xs pull-right" to="newdoc">
+            <IconText className="icon-text" iconClassName="fa fa-pencil">New article</IconText>
+          </Link>
+          <h4>Professional Service Documents</h4>
+        </div>
+        {content}
+      </div>
+    );
   }
 });

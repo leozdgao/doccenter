@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import {Link} from 'react-router';
-import {AutoIndexer} from '../../util';
+import AutoIndexer from 'autoindexer';
 import RenderStore from '../../stores/renderStore';
 
 let indexer = AutoIndexer.createIndexer({maxLevel: 4});

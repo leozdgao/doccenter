@@ -15,6 +15,7 @@
   "author": "leozdgao",
   "license": "MIT",
   "dependencies": {
+    "autoindexer": "^0.1.2",
     "bluebird": "^2.9.30",
     "body-parser": "^1.13.1",
     "bootstrap": "^3.3.5",

@@ -2,7 +2,8 @@ import React from 'react';
 import {Link, Navigation} from 'react-router';
 import Modal, {showModal} from '../modal/modal.react';
 import IconText from '../toolkit/icontext.react';
-import {ajax, dateFormat} from '../../util';
+import ajax from '../../utils/ajax';
+import {dateFormat} from '../../utils/helps';
 import Constant from '../../constant';
 import RenderActions from '../../actions/renderActions';
 

@@ -1,6 +1,7 @@
 import Reflux from 'reflux';
 import docActions from '../actions/docActions';
-import {ajax, querystring, ensure} from '../util';
+import {ajax} from '../utils/ajax';
+import {querystring, ensure} from '../utils/helps';
 
 export let cache = {}; // cache name only
 

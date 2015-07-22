@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {isEmptyString} from '../util';
+import {isEmptyString} from '../utils/helps';
 import docActions from '../actions/docActions';
 import docStore, {cache} from '../stores/docStore';
 import Render from './content/render.react';

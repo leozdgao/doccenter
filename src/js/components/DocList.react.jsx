@@ -6,7 +6,7 @@ import PageHeaderActions from '../actions/pageheaderActions';
 import List from './list/doclist.react';
 import TagPanel from './list/tagpanel.react';
 import Fluid from './toolkit/fluid.react';
-import {isInteger, isDefined, ensure} from '../util';
+import {isInteger, isDefined, ensure} from '../utils/helps';
 
 export default React.createClass({
   mixins: [Reflux.ListenerMixin],
@@ -18,7 +18,7 @@ export default React.createClass({
       }
 
       PageHeaderActions.change({breadcrumbs: [{text: 'Home', link: {to: 'overview'}}, { text: 'Documents' }]});
-    },
+    }
   },
   getInitialState () {
     return {

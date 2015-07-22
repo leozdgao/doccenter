@@ -19,11 +19,6 @@
   line-height: @content_lineHeight;
 }
 
-// .editor-title.invalid, .invalid .textbox {
-//   border-color: @invalidColor;
-//   box-shadow: 0 0 2px @invalidColor;
-// }
-
 /* Badge */
 .badge {
   display: inline-block;
@@ -67,6 +62,16 @@
     left: 0;
   }
 }
+.tags-prompt {
+  position: absolute;
+  background-color: #fff;
+  width: 100%;
+  margin-top: 5px;
+  border-radius: 3px;
+  border: 1px solid @border_color;
+  list-style: none;
+}
+
 
 /* Style for Editor */
 .md-panel {
@@ -85,6 +90,7 @@
     left: 0;
     right: 0;
     margin: 0;
+    z-index: 500;
 
     .md-editor {
       height: 100%;

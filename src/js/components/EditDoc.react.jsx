@@ -9,7 +9,8 @@ import TopMost from './editor/topmost.react';
 import docActions from '../actions/docActions';
 import docStore from '../stores/docStore';
 import { Navigation } from 'react-router';
-import { isEmptyString, isDefined, isString, ajax } from '../util';
+import { isEmptyString, isDefined, isString } from '../utils/helps';
+import ajax from '../utils/ajax';
 import Constant from '../constant';
 import PageHeaderActions from '../actions/pageheaderActions';
 
