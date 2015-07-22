@@ -1,8 +1,21 @@
 @keyframes scaleYOut {
-  from {
-    transform: scaleY(0);
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes throbberLoader {
+  0% {
+    background: #dde2e7;
   }
-  to {
-    transform: scaleY(1);
+  10% {
+    background: #6b9dc8;
+  }
+  40% {
+    background: #dde2e7;
   }
 }
