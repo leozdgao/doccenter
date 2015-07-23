@@ -7,7 +7,7 @@ import ButtonGroup from './editor/buttongroup.react';
 import TopMost from './editor/topmost.react';
 import { isEmptyString, isDefined, isString } from '../utils/helps';
 import { ajax } from '../utils/ajax';
-import Modal, {showModal} from './modal/modal.react';
+import Confirm from './modal/confirm.react';
 import Constant from '../constant';
 import PageHeaderActions from '../actions/pageheaderActions';
 
@@ -22,20 +22,12 @@ export default React.createClass({
     },
     willTransitionFrom (transition, component, callback) {
       if(component._dirty){
-        let content = (<div>Cancel editing?</div>);
-        showModal(content, {
-          width: 400,
-          type: 'confirm',
-          onClose (ret) {
-            if(ret) {
-              component.refs.editor.discard();
-            }
-            else transition.abort();
-
-            // ensure to call it once
+        this.refs.confirm.show()
+          .resolve(callback)
+          .cancel(() => {
+            transition.abort();
             callback();
-          }
-        });
+          });
       }
       else callback();
     }
@@ -73,6 +65,10 @@ export default React.createClass({
             </form>
           </div>
         </div>
+
+        <Confirm ref="confirm">
+          Cancel editing?
+        </Confirm>
       </div>
     );
   },

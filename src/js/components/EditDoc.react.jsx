@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import {showModal} from './modal/modal.react';
+import Confirm from './modal/confirm.react';
 import TagInput from './editor/taginput.react';
 import Editor from './editor/editor.react';
 import TitleInput from './editor/title.react';
@@ -26,20 +26,12 @@ export default React.createClass({
     },
     willTransitionFrom (transition, component, callback) {
       if(component._dirty) {
-        let content = (<div>Cancel editing?</div>);
-        showModal(content, {
-          width: 400,
-          type: 'confirm',
-          onClose (ret) {
-            if(ret) {
-              // component.refs.editor.discard();
-            }
-            else transition.abort();
-
-            // ensure to call it once
+        this.refs.confirm.show()
+          .resolve(callback)
+          .cancel(() => {
+            transition.abort();
             callback();
-          }
-        });
+          });
       }
       else callback();
     }
@@ -98,6 +90,10 @@ export default React.createClass({
     return (
       <div id="editor" className="wrapper-content">
         {content}
+
+        <Confirm ref="confirm">
+          Cancel editing?
+        </Confirm>
       </div>
     );
   },

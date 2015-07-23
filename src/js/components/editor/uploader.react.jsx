@@ -1,7 +1,7 @@
 import React from 'react';
 import Badge from '../toolkit/badge.react';
 import IconText from '../toolkit/icontext.react';
-import Modal, {showModal} from '../modal/modal.react';
+import Confirm from '../modal/confirm.react';
 import {arrayFrom} from '../../utils/helps';
 import {ajax} from '../../utils/ajax';
 
@@ -64,6 +64,9 @@ export default React.createClass({
           </ul>
           <a className="file-add" onClick={this._showInput}><i className="fa fa-plus"></i> Add</a>
         </div>
+
+        <Confirm ref="abortConfirm">Abort uploading ?</Confirm>
+        <Confirm ref="removeConfirm" action={this._removeAction}>Remove attachment?</Confirm>
       </li>
     );
   },
@@ -84,6 +87,9 @@ export default React.createClass({
 
     return false;
   },
+  _removeAction () {
+    return ajax.delete(this.props.url + this._rmfile.key, {}, 0);
+  },
   _togglePanel (e) {
     let showed = this.state.panelShowed;
     if(showed) this.setState({panelShowed: false});
@@ -102,44 +108,23 @@ export default React.createClass({
         this.setState({fileList: fileList, panelShowed: !!fileList.length});
       }
       else if(file.state == -1) { // abort request
-        let content = (
-          <div>Abort uploading ?</div>
-        );
-
-        this.d = showModal(content, {
-          type: 'confirm',
-          width: 400,
-          onClose: (ret) => {
-            if(ret) { // user press confirm
-              let xhr = this._reqs[i];
-              xhr.abort();
-              fileList.splice(i, 1);
-              this.setState({fileList: fileList, panelShowed: !!fileList.length});
-            }
-          }
-        });
+        this.refs.abortConfirm.show()
+          .resolve(() => {
+            let xhr = this._reqs[i];
+            xhr.abort();
+            fileList.splice(i, 1);
+            this.setState({fileList: fileList, panelShowed: !!fileList.length});
+          });
       }
       else {
-        // show modal
-        let content = (
-          <div>Remove this attachment ?</div>
-        );
-
-        this.d = showModal(content, {
-          type: 'confirm',
-          width: 400,
-          onConfirm: () => {
-            return ajax.delete(this.props.url + file.key, {}, 0);
-          },
-          onClose: (ret) => {
-            if(ret) { // user press confirm
-              fileList.splice(i, 1);
-              this.setState({fileList: fileList, panelShowed: !!fileList.length});
-              this._emitChange(); //change
-              this.props.afterRemove && this.props.afterRemove(file.key);
-            }
-          }
-        });
+        this._rmfile = file;
+        this.refs.removeConfirm.show()
+          .resolve(() => {
+            fileList.splice(i, 1);
+            this.setState({fileList: fileList, panelShowed: !!fileList.length});
+            this._emitChange(); //change
+            this.props.afterRemove && this.props.afterRemove(file.key);
+          });
       }
     }
   },

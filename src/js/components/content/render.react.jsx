@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, Navigation} from 'react-router';
-import Modal, {showModal} from '../modal/modal.react';
+import Confirm from '../modal/confirm.react';
 import IconText from '../toolkit/icontext.react';
 import {ajax} from '../../utils/ajax';
 import {dateFormat} from '../../utils/helps';
@@ -65,32 +65,21 @@ export default React.createClass({
         </div>
         <div ref="article" className="ibox-content markdown" dangerouslySetInnerHTML={{__html: this.props.content}}></div>
         {/*<CommentBox />*/}
+
+        <Confirm ref="confirm" action={this._removeAction}>
+          <div>Remove this article ?</div>
+        </Confirm>
       </div>
     );
   },
+  _removeAction() {
+    return ajax.delete('/service/article/' + this.props.article._id);
+  },
   _onRemove () {
-    // prepare container for modal
-    if(!container) {
-      container = document.createElement('div');
-      document.body.appendChild(container);
-    }
-
-    let content = (
-      <div>Remove this article ?</div>
-    ), self = this;
-
-    this.d = showModal(content, {
-      type: 'confirm',
-      width: 400,
-      onConfirm: () => {
-        return ajax.delete('/service/article/' + this.props.article._id);
-      },
-      onClose: (redirect) => {
-        if(redirect) {
-          self.transitionTo('docs');
-        }
-      }
-    }, container);
+    this.refs.confirm.show()
+      .resolve(() => {
+        this.transitionTo('docs');
+      });
   }
   // consider some iframe service like jsfiddle
 });
