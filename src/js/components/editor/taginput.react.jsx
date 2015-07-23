@@ -1,24 +1,38 @@
 import React from 'react';
+import Reflux from 'reflux';
 import cNames from 'classnames';
+import tagActions from '../../actions/tagActions';
+import tagStore from '../../stores/tagStore';
 import Portal from '../../../widgets/src/portal';
 import {contains} from '../../utils/dom';
 
+let tags = [];
+
 export default React.createClass({
+  mixins: [Reflux.ListenerMixin],
   getInitialState: function() {
     return {
-      promptShow: false,
       container: null,
       prompts: [],
-      focus: false
+      focus: false,
+      promptShow: false,
+      promptIndex: 0
     };
   },
   componentDidMount () {
-    let input = React.findDOMNode(this.refs.input);
-    this._initialInputWidth = this._getElementWidth(input);
+    this._tagInput = React.findDOMNode(this.refs.input);
+    this._initialInputWidth = this._getElementWidth(this._tagInput);
     this.setState({container: React.findDOMNode(this.refs.container)});
+
+    tagActions.loadAll();
+    this.listenTo(tagStore, (ret) => {
+      if(!ret.fail) {
+        tags = ret.tags;
+      }
+    });
   },
   render () {
-    let tags = this.props.tags.map((tag, i) => {
+    const tags = this.props.tags.map((tag, i) => {
       return (
         <span key={i} className="tag">{tag}</span>
       );
@@ -33,32 +47,39 @@ export default React.createClass({
         <div style={{position: 'relative', display: 'inline-block', zIndex: 101}}>
           <input type="text" ref="input" onKeyDown={this._keyDown} onKeyUp={this._keyUp} onBlur={this._blur} placeholder="Tag, like: JavaScript" />
           <div ref="container"></div>
+          {this.state.promptShow ?
+             (<ul className="tags-prompt" ref="prompt">
+               {this._getPrompts()}
+             </ul>): null}
         </div>
         <div className={stripClass}></div>
 
         <span className="hidden" ref="hidden"></span>
-
-        <Portal show={this.state.promptShow} container={this.state.container}>
-          <ul className="tags-prompt" ref="prompt">
-            <li>Test</li>
-            <li>Test</li>
-            <li>Test</li>
-          </ul>
-        </Portal>
       </div>
     );
   },
+  _needShowPrompt () {
+    return this.state.prompts.length > 0 && this._tagInput && this._tagInput.value.length > 0;
+  },
   _handleGlobalClick (e) {
     const prompt = React.findDOMNode(this.refs.prompt);
-    if(contains(prompt, e.target)) {
-
-    }
-    else {
-      this._hidePrompt();
-    }
+    if(!contains(prompt, e.target)) this._hidePrompt();
   },
-  _showPrompt () {
-    this.setState({promptShow: true});
+  _getPrompts () {
+    return this.state.prompts.map((tag, i) => {
+      return (<li key={i} className={cNames({active: this.state.promptIndex == i})} onClick={this._promptEntryClick(i)}>{tag}</li>);
+    });
+  },
+  _promptEntryClick (i) {
+    return (e) => {
+      let input = React.findDOMNode(this.refs.input);
+      input.value = '';
+      this._addTag(this.state.prompts[i]);
+      this._hidePrompt();
+    };
+  },
+  _showPrompt (prompts) {
+    this.setState({promptShow: true, prompts: prompts, promptIndex: 0});
     window.addEventListener('click', this._handleGlobalClick);
   },
   _hidePrompt () {
@@ -75,8 +96,8 @@ export default React.createClass({
     let val = input.value.trim();
     input.value = "";
     input.style.width = this._initialInputWidth + "px";
-    this._addTag(val);
-    this._hidePrompt();
+    // this._addTag(val);
+    // this._hidePrompt();
     this.setState({focus: false});
   },
   _keyDown (e) {
@@ -94,12 +115,32 @@ export default React.createClass({
       };
       case 8: { // remove tag if 'del'
         if(input.value == '') this._removeTag();
-        if(input.value.length == 1) this._hidePrompt();
+        break;
+      };
+      case 38: { // up
+        if(this.state.promptShow && this.state.promptIndex > 0) {
+          e.preventDefault();
+          this.setState({promptIndex: this.state.promptIndex - 1});
+        }
+        break;
+      };
+      case 40: { // down
+        if(this.state.promptShow && this.state.promptIndex < this.state.prompts.length - 1) {
+          e.preventDefault();
+          this.setState({promptIndex: this.state.promptIndex + 1});
+        }
+        break;
+      };
+      case 13: { // enter
+        if(this.state.promptShow) {
+          input.value = "";
+          this._addTag(this.state.prompts[this.state.promptIndex]);
+          this._hidePrompt();
+        }
         break;
       };
       default: {
-        // dynamic adjust input width
-        this._showPrompt();
+
       };
     }
   },
@@ -107,6 +148,20 @@ export default React.createClass({
     let input = React.findDOMNode(this.refs.input);
     let hidden = React.findDOMNode(this.refs.hidden);
 
+    // check prompt show or not
+    if(input.value.length > 0) {
+      let regex = new RegExp(`^${input.value.toLowerCase()}`);
+      let prompts = tags.filter((tag) => {
+        return regex.test(tag.toLowerCase());
+      }).sort();
+
+      if(!this.state.promptShow) this._showPrompt(prompts);
+      else if(prompts.length > 0) this.setState({prompts: prompts});
+      else this._hidePrompt();
+    }
+    else this._hidePrompt();
+
+    // adjust input width
     hidden.textContent = input.value;
 
     let wInput = this._getElementWidth(input);

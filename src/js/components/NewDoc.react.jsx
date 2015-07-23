@@ -6,7 +6,7 @@ import TitleInput from './editor/title.react';
 import ButtonGroup from './editor/buttongroup.react';
 import TopMost from './editor/topmost.react';
 import { isEmptyString, isDefined, isString } from '../utils/helps';
-import ajax from '../utils/ajax';
+import { ajax } from '../utils/ajax';
 import Modal, {showModal} from './modal/modal.react';
 import Constant from '../constant';
 import PageHeaderActions from '../actions/pageheaderActions';
