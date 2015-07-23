@@ -38,16 +38,7 @@ export default Reflux.createStore({
         this.trigger({list: res, count: count});
       })
       .catch((e) => {
-        this.trigger({fail: 'page'});
-      });
-  },
-  onTags () {
-    ajax.get('/service/article/tags')
-      .then((res) => {
-        this.trigger({tags: res.tags});
-      })
-      .catch((e) => {
-        this.trigger({fail: 'tag'});
+        this.trigger({fail: true});
       });
   },
   onDocLoad (id) {

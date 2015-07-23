@@ -89,6 +89,7 @@ export default React.createClass({
       };
       case 8: { // remove tag if 'del'
         if(input.value == '') this._removeTag();
+        if(input.value.length == 1) this._hidePrompt();
         break;
       };
       default: {

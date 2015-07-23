@@ -20,7 +20,7 @@ export default React.createClass({
   _handleKeyDown (e) {
     if(e.keyCode == 13) {
       let val = this.textControl.value, query = {};
-      query.p = this.getQuery().p;
+      query.p = 1;
       query.s = val;
       this.transitionTo('docs', {}, query);
     };
