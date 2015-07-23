@@ -8,6 +8,17 @@
   to { opacity: 1; }
 }
 
+@keyframes slideRightIn {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 @keyframes throbberLoader {
   0% {
     background: #dde2e7;
@@ -19,3 +30,6 @@
     background: #dde2e7;
   }
 }
+
+.fadeIn { animation: fadeIn 1s ease; }
+.slideRightIn { animation: slideRightIn 1s ease; }

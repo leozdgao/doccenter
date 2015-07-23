@@ -41,7 +41,7 @@ export default React.createClass({
       });
 
       return (
-        <div className="list-content">
+        <div className="fadeIn">
           {items}
         </div>
       );

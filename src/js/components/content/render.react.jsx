@@ -40,7 +40,7 @@ export default React.createClass({
     });
 
     return (
-      <div className="ibox render">
+      <div className="ibox render fadeIn">
         <div className="ibox-title header">
           <h1>{article.title}</h1>
           {article.tags.length > 0 ? (

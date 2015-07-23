@@ -54,7 +54,7 @@ export default React.createClass({
           <h4>Professional Service Documents</h4>
         </div>
         <LoadPanel className="ibox-content" state={this.state.panelState} onReload={this.load}>
-          <div className="list-content">
+          <div className="fadeIn">
             <SearchBox />
             {this._getPrompt(query)}
             {this._getSlips()}

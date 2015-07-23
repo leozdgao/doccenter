@@ -58,7 +58,7 @@ export default React.createClass({
   render () {
     return (
       <div id="editor" className="wrapper-content">
-        <div className="ibox">
+        <div className="ibox slideRightIn">
           <div className="ibox-title">
             <h4>Write a new article</h4>
           </div>

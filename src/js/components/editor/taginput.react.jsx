@@ -1,4 +1,5 @@
 import React from 'react';
+import cNames from 'classnames';
 import Portal from '../../../widgets/src/portal';
 import {contains} from '../../utils/dom';
 
@@ -7,7 +8,8 @@ export default React.createClass({
     return {
       promptShow: false,
       container: null,
-      prompts: []
+      prompts: [],
+      focus: false
     };
   },
   componentDidMount () {
@@ -21,6 +23,7 @@ export default React.createClass({
         <span key={i} className="tag">{tag}</span>
       );
     });
+    const stripClass = cNames(['strip', {show: this.state.focus}]);
 
     return (
       <div className="cleanText tag-input" onClick={this._click}>
@@ -29,11 +32,11 @@ export default React.createClass({
         </div>
         <div style={{position: 'relative', display: 'inline-block', zIndex: 101}}>
           <input type="text" ref="input" onKeyDown={this._keyDown} onKeyUp={this._keyUp} onBlur={this._blur} placeholder="Tag, like: JavaScript" />
-          <div ref="container" ></div>
+          <div ref="container"></div>
         </div>
+        <div className={stripClass}></div>
 
         <span className="hidden" ref="hidden"></span>
-        <div className="strip"></div>
 
         <Portal show={this.state.promptShow} container={this.state.container}>
           <ul className="tags-prompt" ref="prompt">
@@ -65,6 +68,7 @@ export default React.createClass({
   _click () {
     let input = React.findDOMNode(this.refs.input);
     input.focus();
+    this.setState({focus: true});
   },
   _blur () {
     let input = React.findDOMNode(this.refs.input);
@@ -73,6 +77,7 @@ export default React.createClass({
     input.style.width = this._initialInputWidth + "px";
     this._addTag(val);
     this._hidePrompt();
+    this.setState({focus: false});
   },
   _keyDown (e) {
     let input = React.findDOMNode(this.refs.input);
