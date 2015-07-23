@@ -3,7 +3,7 @@ import Badge from '../toolkit/badge.react';
 import IconText from '../toolkit/icontext.react';
 import Modal, {showModal} from '../modal/modal.react';
 import {arrayFrom} from '../../utils/helps';
-import ajax from '../../utils/ajax';
+import {ajax} from '../../utils/ajax';
 
 export default React.createClass({
   componentDidMount: function() {

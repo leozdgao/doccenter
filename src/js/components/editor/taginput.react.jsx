@@ -133,6 +133,7 @@ export default React.createClass({
       };
       case 13: { // enter
         if(this.state.promptShow) {
+          e.preventDefault();
           input.value = "";
           this._addTag(this.state.prompts[this.state.promptIndex]);
           this._hidePrompt();
