@@ -79,11 +79,11 @@ export default React.createClass({
     };
   },
   _showPrompt (prompts) {
-    this.setState({promptShow: true, prompts: prompts, promptIndex: 0});
+    this.setState({promptShow: true, prompts: prompts});
     window.addEventListener('click', this._handleGlobalClick);
   },
   _hidePrompt () {
-    this.setState({promptShow: false});
+    this.setState({promptShow: false, promptIndex: 0});
     window.removeEventListener('click', this._handleGlobalClick);
   },
   _click () {
@@ -96,8 +96,6 @@ export default React.createClass({
     let val = input.value.trim();
     input.value = "";
     input.style.width = this._initialInputWidth + "px";
-    // this._addTag(val);
-    // this._hidePrompt();
     this.setState({focus: false});
   },
   _keyDown (e) {
@@ -156,8 +154,9 @@ export default React.createClass({
         return regex.test(tag.toLowerCase());
       }).sort();
 
-      if(!this.state.promptShow) this._showPrompt(prompts);
-      else if(prompts.length > 0) this.setState({prompts: prompts});
+      if(prompts.length > 0) {
+        this._showPrompt(prompts);
+      }
       else this._hidePrompt();
     }
     else this._hidePrompt();

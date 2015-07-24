@@ -97,6 +97,9 @@ export default React.createClass({
         <Confirm ref="confirm">
           Cancel editing?
         </Confirm>
+        <Confirm ref="abortConfirm">
+          There are still some files are uploading, abort them?
+        </Confirm>
       </div>
     );
   },
@@ -115,18 +118,12 @@ export default React.createClass({
     }
 
     if(this.refs.editor.checkRequesting()) { // show modal
-      let content = (<div>There are still some files are uploading, abort them?</div>);
-      showModal(content, {
-        type: 'confirm',
-        width: 400,
-        onClose: (ret) => {
-          if(ret) {
-            this.refs.editor.abort();
-            docActions.docUpdate(this.state.article._id, this.state.article);
-          }
-          // do nothing if canceled
-        }
-      });
+      this.refs.abortConfirm.show()
+        .resolve(() => {
+          this.refs.editor.abort();
+          docActions.docUpdate(this.state.article._id, this.state.article);
+          this.refs.abortConfirm.hide();
+        })
     }
     else { // do submitting
       docActions.docUpdate(this.state.article._id, this.state.article);
