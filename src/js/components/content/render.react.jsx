@@ -76,9 +76,11 @@ export default React.createClass({
     return ajax.delete('/service/article/' + this.props.article._id);
   },
   _onRemove () {
+    const self = this;
     this.refs.confirm.show()
-      .resolve(() => {
-        this.transitionTo('docs');
+      .resolve(function() {
+        this.hide();
+        setTimeout(() => { self.transitionTo('docs'); }, 0);
       });
   }
   // consider some iframe service like jsfiddle

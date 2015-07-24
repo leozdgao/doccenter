@@ -108,22 +108,26 @@ export default React.createClass({
         this.setState({fileList: fileList, panelShowed: !!fileList.length});
       }
       else if(file.state == -1) { // abort request
+        const self = this;
         this.refs.abortConfirm.show()
-          .resolve(() => {
-            let xhr = this._reqs[i];
+          .resolve(function() {
+            let xhr = self._reqs[i];
             xhr.abort();
             fileList.splice(i, 1);
-            this.setState({fileList: fileList, panelShowed: !!fileList.length});
+            self.setState({fileList: fileList, panelShowed: !!fileList.length});
+            this.hide();
           });
       }
       else {
+        const self = this;
         this._rmfile = file;
         this.refs.removeConfirm.show()
-          .resolve(() => {
+          .resolve(function() {
             fileList.splice(i, 1);
-            this.setState({fileList: fileList, panelShowed: !!fileList.length});
-            this._emitChange(); //change
-            this.props.afterRemove && this.props.afterRemove(file.key);
+            self.setState({fileList: fileList, panelShowed: !!fileList.length});
+            self._emitChange(); //change
+            self.props.afterRemove && this.props.afterRemove(file.key);
+            this.hide();
           });
       }
     }

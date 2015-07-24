@@ -19,6 +19,17 @@
   }
 }
 
+@keyframes scaleIn {
+    from {
+        transform: scale(0.8, 0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1, 1);
+        opacity: 1;
+    }
+}
+
 @keyframes throbberLoader {
   0% {
     background: #dde2e7;
@@ -33,3 +44,4 @@
 
 .fadeIn { animation: fadeIn 1s ease; }
 .slideRightIn { animation: slideRightIn 1s ease; }
+.scaleIn { animation: scaleIn .3s ease; }

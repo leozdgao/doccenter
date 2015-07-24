@@ -26,12 +26,15 @@ export default React.createClass({
     },
     willTransitionFrom (transition, component, callback) {
       if(component._dirty) {
-        this.refs.confirm.show()
-          .resolve(callback)
-          .cancel(() => {
+        component.refs.confirm.show()
+          .resolve(function() {
+            this.hide();
+          })
+          .cancel(function() {
             transition.abort();
-            callback();
-          });
+            this.hide();
+          })
+          .final(callback);
       }
       else callback();
     }
