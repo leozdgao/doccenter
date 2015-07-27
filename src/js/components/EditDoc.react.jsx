@@ -25,10 +25,11 @@ export default React.createClass({
       ]});
     },
     willTransitionFrom (transition, component, callback) {
-      if(component._dirty) {
+      if(component._dirty || component.refs.editor.checkRequesting()) {
         component.refs.confirm.show()
           .resolve(function() {
             this.hide();
+            component.refs.editor.abort();
           })
           .cancel(function() {
             transition.abort();
