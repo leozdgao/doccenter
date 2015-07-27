@@ -126,7 +126,7 @@ export default React.createClass({
             fileList.splice(i, 1);
             self.setState({fileList: fileList, panelShowed: !!fileList.length});
             self._emitChange(); //change
-            self.props.afterRemove && this.props.afterRemove(file.key);
+            self.props.afterRemove && self.props.afterRemove(file.key);
             this.hide();
           });
       }
