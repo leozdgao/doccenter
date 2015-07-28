@@ -87,5 +87,5 @@ mongoose.connection.on("error", function(err) {
 });
 
 app.listen(config.port, function() {
-  logger.info("Server listening on port " + port);
+  logger.info("Server listening on port " + config.port);
 });
