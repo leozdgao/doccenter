@@ -15,7 +15,6 @@ require('colors');
 var logger = pen.createLogger(config.log);
 
 var development = process.env.NODE_ENV !== 'production';
-var port = process.env.PORT || 4000;
 
 var app = express();
 
@@ -87,6 +86,6 @@ mongoose.connection.on("error", function(err) {
   logger.error("Error occurred: " + err.message);
 });
 
-app.listen(port, function() {
+app.listen(config.port, function() {
   logger.info("Server listening on port " + port);
 });
