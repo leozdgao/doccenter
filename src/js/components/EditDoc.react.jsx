@@ -118,6 +118,8 @@ export default React.createClass({
       if(!this._checkValidate(key, this.state.article[key])) return;
     }
 
+    if(this._dirty) this.state.article.lastUpdateDate = new Date(); // set update
+
     if(this.refs.editor.checkRequesting()) { // show modal
       this.refs.abortConfirm.show()
         .resolve(() => {

@@ -38,10 +38,7 @@ exports.post = function(obj) {
   return newArticle.saveAsync();
 };
 
-exports.update = function(id, update, opts) {
-  if(typeof update.lastUpdateDate === 'undefined') update.lastUpdateDate = new Date();
-  return Article.findByIdAndUpdateAsync(id, update, opts);
-}
+exports.update =  Article.findByIdAndUpdateAsync.bind(Article);
 
 exports.remove = Article.findByIdAndRemoveAsync.bind(Article);
 
