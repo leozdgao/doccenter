@@ -16,8 +16,7 @@ import marked from 'marked';
 import highlight from 'highlight';
 
 highlight.configure({
-  tabReplace: '  ',
-  languages: ['html', 'css', 'javascript']
+  tabReplace: '  '
 });
 
 marked.setOptions({
