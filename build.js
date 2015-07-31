@@ -6,7 +6,6 @@ import { exec } from 'child-process-promise';
 import 'colors';
 
 const vendors = [
-  './src/vendors/highlight.pack.js',
   './src/index.html',
   './node_modules/react/dist/react.js',
   './node_modules/react/dist/react.min.js',
