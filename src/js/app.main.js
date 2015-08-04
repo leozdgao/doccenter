@@ -42,5 +42,5 @@ let routes = (
 );
 
 Router.run(routes, Router.HistoryLocation, (Root) => {
-  React.render(<Root />, document.body);
+  React.render(<Root />, document.getElementById('app'));
 });
