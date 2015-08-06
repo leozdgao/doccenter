@@ -1,7 +1,7 @@
 {
-  "name": "EMDocCenter",
+  "name": "DocCenter",
   "version": "0.1.0",
-  "description": "Document center for EllieMae Team.",
+  "description": "Document center for Team.",
   "repository": {
     "github": "https://github.com/leozdgao/em-doccenter.git"
   },
