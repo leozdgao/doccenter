@@ -1,3 +1,3 @@
-## EM-DocCenter
+## DocCenter
 
-Document center for EllieMae Team.
+Document center for Team.
