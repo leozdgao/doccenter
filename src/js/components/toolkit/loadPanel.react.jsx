@@ -19,7 +19,7 @@ export default React.createClass({
     if(this.props.state > 0) { // loading
       render = (
         <div className="middle">
-          <span className="spinner"></span>        
+          <span className="spinner"></span>
         </div>
       );
     }

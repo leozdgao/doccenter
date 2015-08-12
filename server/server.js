@@ -67,6 +67,7 @@ logger.info("Try to connect to DB, timeout set to " + timeout + "ms");
 
 mongoose.connection.on("connected", function() {
   logger.info("Connected to DB...");
+  mongoose.connection.useDb("PSPMS");
   connected = true;
 });
 
