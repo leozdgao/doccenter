@@ -36,7 +36,8 @@ const baseConfig = {
         'react-router': 'ReactRouter',
         'marked': 'marked',
         'highlight': 'hljs',
-        'reflux': 'Reflux'
+        'reflux': 'Reflux',
+        'echarts': 'echarts'
     },
     plugins: [
       new webpack.DefinePlugin({

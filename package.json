@@ -8,7 +8,7 @@
   "scripts": {
     "build": "babel-node build.js",
     "dev": "babel-node server/dev-run",
-    "start": "npm run build && NODE_ENV=production node server/server",
+    "start": "npm run build && node server/server",
     "deploy": "npm run build && NODE_ENV=production pm2 start server/server.js --name doccenter",
     "redeploy": "npm run build && NODE_ENV=production pm2 restart doccenter"
   },
