@@ -4,6 +4,18 @@ import LineChart from './charts/lineChart.react';
 // import { Route, Link, RouteHandler } from 'react-router';
 
 export default React.createClass({
+  componentDidMount () {
+    window.onload = function() {
+      // changeChartSize();
+    }
+    window.onresize = function() {
+      // changeChartSize();
+    }
+    changeChartSize() {
+      let ibox = document.getElementById("chart");
+      console.log(ibox.parentElement.parentElement.offsetWidth);
+    }
+  },
   statics: {
     willTransitionTo () {
       PageHeaderActions.change({show: false});
