@@ -11,7 +11,7 @@ export default React.createClass({
     window.onresize = function() {
       // changeChartSize();
     }
-    changeChartSize() {
+    function changeChartSize() {
       let ibox = document.getElementById("chart");
       console.log(ibox.parentElement.parentElement.offsetWidth);
     }
@@ -26,7 +26,7 @@ export default React.createClass({
       <div className="wrapper">
         <div className="row">
 
-          <div className="col-md-2">
+          <div className="col-md-3">
             <div className='ibox'>
               <div className='ibox-title'>
                 <h3>DashBoard 1</h3>
@@ -37,7 +37,7 @@ export default React.createClass({
             </div>
           </div>
 
-          <div className="col-md-2">
+          <div className="col-md-3">
             <div className='ibox'>
               <div className='ibox-title'>
                 <h3>DashBoard 2</h3>
@@ -59,8 +59,8 @@ export default React.createClass({
             </div>
           </div>
 
-          <div className="col-md-4">
-            <div className='ibox quarterChart'>
+          <div className="col-md-6">
+            <div className='ibox'>
               <div className='ibox-title'>
                 <h3>Quarter Report</h3>
               </div>

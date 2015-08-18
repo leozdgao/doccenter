@@ -16,11 +16,12 @@ export default React.createClass({
           chart.addLine(data);
       };
       chart.showLastLines(lastLineShow);
+      chart.addResizeFunction();
     });
   },
   render () {
     return (
-      <div id={this.props.id} className='chart' style={{height: +this.props.height, width: +this.props.width}}></div>
+      <div id={this.props.id} className='chart'></div>
     );
   }
 });

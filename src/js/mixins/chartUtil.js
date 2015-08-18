@@ -2,7 +2,13 @@ import echarts from 'echarts'
 
 export default {
 	initChart (divId, chartTitle, titleAlign, chartType, formate) {
-        let chart = echarts.init(document.getElementById(divId));
+        let chartDiv = document.getElementById(divId);
+        let container = chartDiv.parentElement.parentElement;
+        chartDiv.style.width = container.offsetWidth + 'px';
+        chartDiv.style.height = container.offsetHeight + 'px';
+
+        let chart = echarts.init(chartDiv);
+        chart.id = divId;
         chart.formate = formate;
         let dataGrids = [],xAxisName,yAxisName;
         switch(chartType){
@@ -41,6 +47,7 @@ export default {
             },
             calculable : false,
             title: {
+                show: false,
                 x: titleAlign,
                 text: chartTitle
             },
@@ -78,6 +85,26 @@ export default {
                     chart.component.legend.setSelected(series[i].name, true);
                 }
             }
+        }
+
+        chart.addResizeFunction = () =>{
+            let oldOnLoadEvent = window.onload;
+            let oldOnResizeEvent = window.onresize;
+            window.onload = () => {
+                oldOnLoadEvent();
+                chart.update();
+            }
+            window.onresize = () => {
+                oldOnResizeEvent();
+                chart.update();
+            }
+        }
+
+        chart.update = () => {
+            let chartDiv = document.getElementById(chart.id);
+            let container = chartDiv.parentElement.parentElement;
+            chartDiv.style.width = container.offsetWidth + 'px';
+            chart.resize();
         }
 
         return chart;
