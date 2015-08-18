@@ -4,9 +4,9 @@ import EchartsUtil from '../../mixins/chartUtil';
 export default React.createClass({
   mixins: [ EchartsUtil ],
   componentDidMount () {
-    const {id, type, title, titleAlign, lastLineShow, formate} = this.props;
+    const {id, type, title, titleAlign, lastLineShow, formate, containerId} = this.props;
     const url = "http://10.10.73.208:1339/rest/statistic?conditions.year.$gte=2000&conditions.year.$lte=2120&conditions.month.$gte=1&conditions.month.$lte=12";
-    let chart = this.initChart(id, title, titleAlign, type, formate);
+    let chart = this.initChart(id, title, titleAlign, type, formate, containerId);
     this.loadXMLDoc(url, (jsonData) => {
       let chartData = this.jsonToChart(jsonData, type);
       for (let i = 0; i < chartData.length; i++) {

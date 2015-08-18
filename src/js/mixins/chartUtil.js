@@ -1,9 +1,9 @@
 import echarts from 'echarts'
 
 export default {
-	initChart (divId, chartTitle, titleAlign, chartType, formate) {
+	initChart (divId, chartTitle, titleAlign, chartType, formate, containerId) {
         let chartDiv = document.getElementById(divId);
-        let container = chartDiv.parentElement.parentElement;
+        let container = document.getElementById(containerId);
         chartDiv.style.width = container.offsetWidth + 'px';
         chartDiv.style.height = container.offsetHeight + 'px';
 
@@ -102,7 +102,7 @@ export default {
 
         chart.update = () => {
             let chartDiv = document.getElementById(chart.id);
-            let container = chartDiv.parentElement.parentElement;
+            let container = document.getElementById(containerId);
             chartDiv.style.width = container.offsetWidth + 'px';
             chart.resize();
         }

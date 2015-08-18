@@ -6,14 +6,8 @@ import LineChart from './charts/lineChart.react';
 export default React.createClass({
   componentDidMount () {
     window.onload = function() {
-      // changeChartSize();
     }
     window.onresize = function() {
-      // changeChartSize();
-    }
-    function changeChartSize() {
-      let ibox = document.getElementById("chart");
-      console.log(ibox.parentElement.parentElement.offsetWidth);
     }
   },
   statics: {
@@ -59,13 +53,13 @@ export default React.createClass({
             </div>
           </div>
 
-          <div className="col-md-6">
+          <div id="myQuarterChartContainer" className="col-md-6">
             <div className='ibox'>
               <div className='ibox-title'>
                 <h3>Quarter Report</h3>
               </div>
               <div className='ibox-content'>
-                <LineChart id="myQuarterChart" type="quarter" formate="bar" titleAlign="center" height="300" width="500" lastLineShow="3"/>
+                <LineChart id="myQuarterChart" type="quarter" formate="bar" titleAlign="center" height="300" width="500" lastLineShow="3"  containerId="myQuarterChartContainer"/>
               </div>
             </div>
           </div>
@@ -76,12 +70,12 @@ export default React.createClass({
 
 
 
-        <div className='ibox yearChart'>
+        <div id="myYearChartContainer" className='ibox yearChart'>
           <div className='ibox-title'>
             <h3>Annual Report</h3>
           </div>
           <div className='ibox-content'>
-            <LineChart id="myYearChart" type="year" formate="line" titleAlign="center" height="400" width="700" lastLineShow="3"/>
+            <LineChart id="myYearChart" type="year" formate="line" titleAlign="center" height="400" width="700" lastLineShow="3" containerId="myYearChartContainer"/>
           </div>
         </div>
       </div>
