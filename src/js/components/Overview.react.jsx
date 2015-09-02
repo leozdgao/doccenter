@@ -81,9 +81,7 @@ export default React.createClass({
               <h3>Project Viewer</h3>
             </div>
             <div className='ibox-content'>
-              <div className='jobContainer'>
-                <TableChart />
-              </div>
+              <TableChart />
             </div>
           </div>
         </div>

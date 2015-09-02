@@ -30,7 +30,6 @@ export default React.createClass({
       for (var i = 0; i < this.jobs.length; i++) {
         let startDate = new Date(this.jobs[i].startDate);
         let today = new Date(Date.now());
-        console.log(today);
         if (startDate.getFullYear() == today.getFullYear() && startDate.getMonth() == today.getMonth() + 1 && startDate.getDate() == today.getDate()) {
           this.jobs[i].projectId.type = "";
           if (this.jobs[i].projectId.type == "") {this.jobs[i].projectId.type = this.jobs[i].projectId.isCodeBase ? "CodeBase" : "";}

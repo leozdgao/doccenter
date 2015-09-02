@@ -8,20 +8,22 @@ export default React.createClass({
   },
   render () {
     return (
-      <table className="table">
-        <thead>
-          <tr>
-            <th>ClientId</th>
-            <th>Company</th>
-            <th>Project</th>
-            <th>Type</th>
-            <th>Members</th>
-            <th>Finished Date</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <TableRow />
-      </table>
+      <div className='tableContainer'>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>ClientId</th>
+              <th>Company</th>
+              <th>Project</th>
+              <th>Type</th>
+              <th>Members</th>
+              <th>Finished Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <TableRow />
+        </table>
+      </div>
     );
   }
 });
